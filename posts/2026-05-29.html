@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tokyo Insight | 2026-05-29</title>
+    <style>
+    :root {
+      --bg: #f6f1e8;
+      --bg-soft: #fdfaf4;
+      --paper: rgba(255, 252, 247, 0.88);
+      --paper-strong: rgba(255, 250, 242, 0.97);
+      --ink: #1f2a30;
+      --muted: #627077;
+      --line: rgba(31, 42, 48, 0.12);
+      --accent: #be6a4a;
+      --accent-soft: rgba(190, 106, 74, 0.12);
+      --accent-cool: #6d8b8a;
+      --shadow: 0 24px 60px rgba(42, 36, 31, 0.08);
+      --radius: 22px;
+      --radius-small: 14px;
+      --max: 1080px;
+      --sans: "Avenir Next", "Segoe UI", sans-serif;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background:
+        radial-gradient(circle at top left, rgba(190, 106, 74, 0.14), transparent 32%),
+        radial-gradient(circle at top right, rgba(109, 139, 138, 0.15), transparent 28%),
+        linear-gradient(180deg, #faf6ef 0%, var(--bg) 52%, #efe7dc 100%);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.65;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+      padding: 32px 0 64px;
+    }
+
+    .hero,
+    .panel,
+    .topic-card,
+    .archive-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--serif);
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 4.4rem);
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 64ch;
+    }
+
+    .meta,
+    .pill-row,
+    .actions,
+    .stats,
+    .archive-grid,
+    .topic-grid,
+    .detail-grid,
+    .steps {
+      display: grid;
+      gap: 14px;
+    }
+
+    .actions,
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper-strong);
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .action:hover {
+      border-color: rgba(31, 42, 48, 0.24);
+      transform: translateY(-1px);
+    }
+
+    .panel {
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+
+    .steps,
+    .archive-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .step,
+    .archive-card {
+      padding: 18px;
+      border-radius: var(--radius-small);
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+    }
+
+    .archive-card h3 {
+      margin-bottom: 6px;
+    }
+
+    .topic-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      margin-top: 16px;
+    }
+
+    .topic-link {
+      display: block;
+      text-decoration: none;
+      padding: 16px;
+      border-radius: var(--radius-small);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.28));
+    }
+
+    .topic-link:hover {
+      border-color: rgba(31, 42, 48, 0.24);
+      transform: translateY(-1px);
+    }
+
+    .topic-card {
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    .detail-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 18px;
+    }
+
+    .detail {
+      padding: 16px;
+      border-radius: var(--radius-small);
+      background: rgba(255, 255, 255, 0.52);
+      border: 1px solid var(--line);
+    }
+
+    .label {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.86rem;
+      text-decoration: none;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .archive-meta,
+    .small {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .quote {
+      padding: 16px 18px;
+      border-left: 3px solid var(--accent-cool);
+      background: rgba(109, 139, 138, 0.08);
+      border-radius: 0 14px 14px 0;
+    }
+
+    .copy-box {
+      width: 100%;
+      min-height: 180px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-small);
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--ink);
+      font: inherit;
+      line-height: 1.6;
+      resize: vertical;
+    }
+
+    .copy-box:focus {
+      outline: 2px solid rgba(109, 139, 138, 0.28);
+      border-color: rgba(109, 139, 138, 0.44);
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(calc(100% - 20px), var(--max));
+        padding-top: 20px;
+      }
+
+      .hero,
+      .panel,
+      .topic-card {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 2.1rem;
+      }
+    }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Tokyo Insight Daily Preview</p>
+        <h1>May 29, 2026</h1>
+        <p class="lead">A Korean developer living in Tokyo observing Japanese society from the inside.</p>
+        <div class="actions">
+          <a class="action" href="../index.html">Back to homepage</a>
+          <a class="action" href="../data/2026-05-29.json">Open JSON data</a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Topic Lineup</h2>
+        <p class="muted">Designed for quick scanning before production.</p>
+        <div class="topic-grid">
+          <a class="topic-link" href="#topic-1"><span class="label">Tokyo Lifestyle</span><h3>Why Tokyo&#x27;s convenience store is quietly becoming a supermarket</h3><p class="small">In Tokyo, the convenience store may be becoming a supermarket.</p></a>
+<a class="topic-link" href="#topic-2"><span class="label">AI &amp; Technology in Japan</span><h3>Japan&#x27;s government is already drafting documents with AI</h3><p class="small">This surprised me: a government answer in Japan was drafted by AI.</p></a>
+<a class="topic-link" href="#topic-3"><span class="label">Japanese Work Culture</span><h3>Why &#x27;quiet quitting&#x27; is finally starting to feel real in Japan</h3><p class="small">Japan is famous for overwork, so this shift feels important.</p></a>
+<a class="topic-link" href="#topic-4"><span class="label">Japanese Consumer Trends</span><h3>Japan&#x27;s next shopping trend might be protecting mental energy</h3><p class="small">Japan may be moving from time-saving to stress-saving.</p></a>
+<a class="topic-link" href="#topic-5"><span class="label">AI &amp; Technology in Japan</span><h3>AI glasses are landing in Japan, and Tokyo is the real test</h3><p class="small">Tokyo might be the perfect city to test AI glasses.</p></a>
+<a class="topic-link" href="#topic-6"><span class="label">AI &amp; Technology in Japan</span><h3>Tokyo doesn&#x27;t just want AI, it wants AI that can explain itself</h3><p class="small">Tokyo&#x27;s AI plan says a lot about how Japan adopts new tech.</p></a>
+<a class="topic-link" href="#topic-7"><span class="label">Japanese Work Culture</span><h3>In Japan, the big AI shift looks more like office software than robots</h3><p class="small">Japan&#x27;s AI future may look more like documents than humanoid robots.</p></a>
+<a class="topic-link" href="#topic-8"><span class="label">Japanese Consumer Trends</span><h3>Japan is already preparing for AI that shops before you do</h3><p class="small">The next shopping shift may be AI choosing before you even click.</p></a>
+<a class="topic-link" href="#topic-9"><span class="label">Japanese Consumer Trends</span><h3>Why Japan is suddenly obsessed with recovery shoes</h3><p class="small">This is such a Japan trend: comfort sold as daily equipment.</p></a>
+<a class="topic-link" href="#topic-10"><span class="label">Tokyo Lifestyle</span><h3>Even the Japanese handheld fan is becoming a serious gadget</h3><p class="small">In Tokyo summer, even a pocket fan becomes a culture story.</p></a>
+        </div>
+      </section>
+
+      
+      <section class="panel">
+        <h2>Top 5 Today</h2>
+        <p class="muted">These are the five topics to prioritize if you only produce a few Shorts.</p>
+        <div class="topic-grid">
+          <a class="topic-link" href="#topic-1"><span class="label">Top 5 #1</span><h3>Why Tokyo&#x27;s convenience store is quietly becoming a supermarket</h3><p class="small">In Tokyo, the convenience store may be becoming a supermarket.</p></a>
+<a class="topic-link" href="#topic-2"><span class="label">Top 5 #2</span><h3>Japan&#x27;s government is already drafting documents with AI</h3><p class="small">This surprised me: a government answer in Japan was drafted by AI.</p></a>
+<a class="topic-link" href="#topic-3"><span class="label">Top 5 #3</span><h3>Why &#x27;quiet quitting&#x27; is finally starting to feel real in Japan</h3><p class="small">Japan is famous for overwork, so this shift feels important.</p></a>
+<a class="topic-link" href="#topic-4"><span class="label">Top 5 #4</span><h3>Japan&#x27;s next shopping trend might be protecting mental energy</h3><p class="small">Japan may be moving from time-saving to stress-saving.</p></a>
+<a class="topic-link" href="#topic-5"><span class="label">Top 5 #5</span><h3>AI glasses are landing in Japan, and Tokyo is the real test</h3><p class="small">Tokyo might be the perfect city to test AI glasses.</p></a>
+        </div>
+      </section>
+
+
+      
+            <article class="topic-card" id="topic-1">
+              <p class="eyebrow">Topic 1</p>
+              <h2>Why Tokyo&#x27;s convenience store is quietly becoming a supermarket</h2>
+              <div class="pill-row">
+                <span class="pill">Tokyo Lifestyle</span>
+                <span class="pill">Top 5 #1</span>
+                <span class="pill">Difficulty: Low</span>
+              </div>
+              <p class="quote">In Tokyo, the convenience store may be becoming a supermarket.</p>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">Thumbnail Text</span>
+                  <p>Tokyo conbini changed</p>
+                </section>
+                <section class="detail">
+                  <span class="label">Copyright Risk</span>
+                  <p>Low if you use your own street and storefront footage. Avoid long use of article photos or branded promo videos.</p>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">30 Second Script</span>
+                <p class="small">Click inside the box to select the full script for CapCut.</p>
+                <textarea class="copy-box" readonly rows="8" spellcheck="false" onclick="this.focus();this.select();">Living in Tokyo, this feels like a very clear signal. Lawson just opened a new format called L Minimart in Kodaira, and around 200 people lined up. What stands out is not the hype. It is what the store says about city life. Smaller households, tighter budgets, and people wanting fast shopping without a full supermarket trip. In Japan, retail changes often look polite and practical. But this one quietly says daily life in Tokyo is getting more compressed, and stores are adapting to that pressure.</textarea>
+              </section>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">B-roll Suggestions</span>
+                  <ul><li>Lawson or small urban supermarket exterior</li>
+<li>Produce crates and budget grocery close-ups</li>
+<li>People carrying small baskets in a residential Tokyo neighborhood</li>
+<li>Station-adjacent shopping street footage</li></ul>
+                </section>
+                <section class="detail">
+                  <span class="label">Editing Notes</span>
+                  <ul><li>Open on produce or a Lawson sign before revealing the mini-supermarket angle.</li>
+<li>Use one on-screen data beat: around 200 people lined up on opening day.</li></ul>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Ideas</span>
+                <ul><li>Original footage from a Tokyo neighborhood supermarket or convenience store</li>
+<li>Walking footage near a suburban station such as Kodaira-style residential streets</li>
+<li>Brief screenshot of the Lawson announcement page with commentary</li></ul>
+              </section>
+              
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Links</span>
+                <ul><li><a href="https://article.yahoo.co.jp/detail/2e1924d3bca74d70d8fd1a2e7bcbdbf1b7f1a4a9" target="_blank" rel="noreferrer">Yahoo JAPAN article: Lawson&#x27;s new L Minimart opens in Kodaira (May 28, 2026)</a></li>
+<li><a href="https://www.lawson.co.jp/lab/tsuushin/art/1528216_4659.html" target="_blank" rel="noreferrer">Lawson official: L Minimart grand opening announcement</a></li></ul>
+              </section>
+            
+            </article>
+            
+            <article class="topic-card" id="topic-2">
+              <p class="eyebrow">Topic 2</p>
+              <h2>Japan&#x27;s government is already drafting documents with AI</h2>
+              <div class="pill-row">
+                <span class="pill">AI &amp; Technology in Japan</span>
+                <span class="pill">Top 5 #2</span>
+                <span class="pill">Difficulty: Medium</span>
+              </div>
+              <p class="quote">This surprised me: a government answer in Japan was drafted by AI.</p>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">Thumbnail Text</span>
+                  <p>Gov AI wrote this?</p>
+                </section>
+                <section class="detail">
+                  <span class="label">Copyright Risk</span>
+                  <p>Low to medium. Public webpages and building exteriors are safer than reusing broadcast clips.</p>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">30 Second Script</span>
+                <p class="small">Click inside the box to select the full script for CapCut.</p>
+                <textarea class="copy-box" readonly rows="8" spellcheck="false" onclick="this.focus();this.select();">Japan&#x27;s AI story is not only about startups or robots. The Digital Agency says its government AI platform, Gennai, is now being tested across all ministries, and about 100,000 officials can already use it. One minister even said an answer draft was made by the system. What interests me is how unglamorous this is. In Japan, AI may spread through bureaucracy first: searching laws, cleaning up spreadsheets, and drafting paperwork. It is a very Japanese path for a big technological shift.</textarea>
+              </section>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">B-roll Suggestions</span>
+                  <ul><li>Kasumigaseki or central government building exteriors</li>
+<li>Keyboard, spreadsheet, and document close-ups</li>
+<li>Commuters entering office districts</li>
+<li>Official website or GitHub page screenshots with commentary</li></ul>
+                </section>
+                <section class="detail">
+                  <span class="label">Editing Notes</span>
+                  <ul><li>Start with a calm government-building shot instead of flashy AI imagery.</li>
+<li>Use caption beats for &#x27;100,000 officials&#x27; and &#x27;AI drafted an answer.&#x27;</li></ul>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Ideas</span>
+                <ul><li>Original Tokyo government district exterior footage</li>
+<li>Laptop footage with generic blurred documents or spreadsheets</li>
+<li>Digital Agency release screenshots used briefly with narration</li></ul>
+              </section>
+              
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Links</span>
+                <ul><li><a href="https://www.itmedia.co.jp/aiplus/article/2605/28/2000000033/" target="_blank" rel="noreferrer">ITmedia AI+: Government AI Gennai expands across ministries (May 28, 2026)</a></li></ul>
+              </section>
+            
+            </article>
+            
+            <article class="topic-card" id="topic-3">
+              <p class="eyebrow">Topic 3</p>
+              <h2>Why &#x27;quiet quitting&#x27; is finally starting to feel real in Japan</h2>
+              <div class="pill-row">
+                <span class="pill">Japanese Work Culture</span>
+                <span class="pill">Top 5 #3</span>
+                <span class="pill">Difficulty: Low</span>
+              </div>
+              <p class="quote">Japan is famous for overwork, so this shift feels important.</p>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">Thumbnail Text</span>
+                  <p>Japan&#x27;s quiet quitting</p>
+                </section>
+                <section class="detail">
+                  <span class="label">Copyright Risk</span>
+                  <p>Low if you create your own charts and footage. Avoid lifting article graphics directly.</p>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">30 Second Script</span>
+                <p class="small">Click inside the box to select the full script for CapCut.</p>
+                <textarea class="copy-box" readonly rows="8" spellcheck="false" onclick="this.focus();this.select();">One work trend I keep noticing in Japan is not loud burnout. It is quiet withdrawal. ITmedia highlighted data showing so-called quiet quitting rising from 3.4 percent in 2017 to 5.8 percent in 2026. That still sounds small, but in Japan, changes in work culture often appear slowly and indirectly. Fewer people want overtime, promotion, or work-centered identity at any cost. To me, this is not just about motivation. It feels like people are quietly renegotiating what a normal life should look like after years of pressure.</textarea>
+              </section>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">B-roll Suggestions</span>
+                  <ul><li>Morning station rush footage</li>
+<li>Office tower elevators or escalators</li>
+<li>Laptop closing at the end of the day</li>
+<li>A quieter residential street after work hours</li></ul>
+                </section>
+                <section class="detail">
+                  <span class="label">Editing Notes</span>
+                  <ul><li>Keep the delivery reflective rather than judgmental.</li>
+<li>Use simple on-screen numbers to show the 2017 to 2026 change.</li></ul>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Ideas</span>
+                <ul><li>Original commuter footage from a Tokyo business district</li>
+<li>Desk or laptop close-ups shot at home</li>
+<li>A minimal chart graphic recreated from the cited data</li></ul>
+              </section>
+              
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Links</span>
+                <ul><li><a href="https://www.itmedia.co.jp/business/articles/2605/14/news006.html" target="_blank" rel="noreferrer">ITmedia Business Online: Quiet quitting trend in Japan (May 14, 2026)</a></li></ul>
+              </section>
+            
+            </article>
+            
+            <article class="topic-card" id="topic-4">
+              <p class="eyebrow">Topic 4</p>
+              <h2>Japan&#x27;s next shopping trend might be protecting mental energy</h2>
+              <div class="pill-row">
+                <span class="pill">Japanese Consumer Trends</span>
+                <span class="pill">Top 5 #4</span>
+                <span class="pill">Difficulty: Medium</span>
+              </div>
+              <p class="quote">Japan may be moving from time-saving to stress-saving.</p>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">Thumbnail Text</span>
+                  <p>Less stress shopping</p>
+                </section>
+                <section class="detail">
+                  <span class="label">Copyright Risk</span>
+                  <p>Low if you rely on your own footage and original captions.</p>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">30 Second Script</span>
+                <p class="small">Click inside the box to select the full script for CapCut.</p>
+                <textarea class="copy-box" readonly rows="8" spellcheck="false" onclick="this.focus();this.select();">This is one of the most interesting consumer ideas in Japan right now. Nikkei Cross Trend has been talking about &#x27;menpa,&#x27; short for mental performance. After years of cost performance and time performance, people are starting to value shopping that does not drain them. Fewer choices. Less comparison. Less emotional friction. Living in Tokyo, that feels believable. The city is efficient, but also exhausting. So the next premium might not be speed. It might be calm. That feels like a small idea, but it could change how stores, apps, and cafes are designed.</textarea>
+              </section>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">B-roll Suggestions</span>
+                  <ul><li>Crowded shelves or dense store signage</li>
+<li>A calmer cafe or minimal retail interior</li>
+<li>Someone hesitating in front of too many choices</li>
+<li>Tokyo sidewalk footage during a busy commute</li></ul>
+                </section>
+                <section class="detail">
+                  <span class="label">Editing Notes</span>
+                  <ul><li>Contrast overload visuals with quiet, simple spaces.</li>
+<li>Introduce &#x27;cost performance&#x27; and &#x27;time performance&#x27; quickly, then pivot to mental performance.</li></ul>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Ideas</span>
+                <ul><li>Original footage from busy and calm retail spaces in Tokyo</li>
+<li>Simple on-screen text graphics explaining the three performance ideas</li>
+<li>Cafe or bookstore footage to visualize low-stress environments</li></ul>
+              </section>
+              
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Links</span>
+                <ul><li><a href="https://www.radionikkei.jp/trendy/_250330.html" target="_blank" rel="noreferrer">RadioNikkei summary of Nikkei Cross Trend: &#x27;Datsu Taipa&#x27; and Menpa consumption (March 30, 2026)</a></li>
+<li><a href="https://prtimes.jp/main/html/rd/p/000000297.000041279.html" target="_blank" rel="noreferrer">Nikkei BP release on the Nikkei Cross Trend 2026 H1 trend map (May 15, 2026)</a></li></ul>
+              </section>
+            
+            </article>
+            
+            <article class="topic-card" id="topic-5">
+              <p class="eyebrow">Topic 5</p>
+              <h2>AI glasses are landing in Japan, and Tokyo is the real test</h2>
+              <div class="pill-row">
+                <span class="pill">AI &amp; Technology in Japan</span>
+                <span class="pill">Top 5 #5</span>
+                <span class="pill">Difficulty: Medium</span>
+              </div>
+              <p class="quote">Tokyo might be the perfect city to test AI glasses.</p>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">Thumbnail Text</span>
+                  <p>AI glasses in Tokyo</p>
+                </section>
+                <section class="detail">
+                  <span class="label">Copyright Risk</span>
+                  <p>Medium if you depend on branded promo material. Safer to use your own city footage and mention the product by name.</p>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">30 Second Script</span>
+                <p class="small">Click inside the box to select the full script for CapCut.</p>
+                <textarea class="copy-box" readonly rows="8" spellcheck="false" onclick="this.focus();this.select();">AI glasses are finally arriving in Japan, and Tokyo may be the most revealing place to watch them. ITmedia reports that Ray-Ban Meta is launching here with features like asking AI questions hands-free and translating signs or menus into Japanese, with live translation coming soon. In a city filled with tiny text, station signs, restaurant menus, and constant visual information, this is not just a gadget story. It is a question about whether AI becomes part of daily perception. Tokyo is dense enough that you would notice that shift immediately.</textarea>
+              </section>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">B-roll Suggestions</span>
+                  <ul><li>POV walking footage in Shibuya or Shinjuku</li>
+<li>Close-up of glasses on a table or in hand</li>
+<li>Menus, station signs, or storefront text</li>
+<li>People moving through dense urban streets</li></ul>
+                </section>
+                <section class="detail">
+                  <span class="label">Editing Notes</span>
+                  <ul><li>Use point-of-view shots to make the device feel lived-in rather than promotional.</li>
+<li>Overlay one translated menu or sign example as a visual cue.</li></ul>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Ideas</span>
+                <ul><li>Original city-walk footage with lots of visible signage</li>
+<li>Cafe or ramen shop menu close-ups you shoot yourself</li>
+<li>Simple mock visual showing translation without reusing ad footage</li></ul>
+              </section>
+              
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Links</span>
+                <ul><li><a href="https://www.itmedia.co.jp/news/articles/2605/19/news114.html" target="_blank" rel="noreferrer">ITmedia NEWS: Ray-Ban Meta launches in Japan (May 19, 2026)</a></li></ul>
+              </section>
+            
+            </article>
+            
+            <article class="topic-card" id="topic-6">
+              <p class="eyebrow">Topic 6</p>
+              <h2>Tokyo doesn&#x27;t just want AI, it wants AI that can explain itself</h2>
+              <div class="pill-row">
+                <span class="pill">AI &amp; Technology in Japan</span>
+                <span class="pill">Watchlist</span>
+                <span class="pill">Difficulty: Medium</span>
+              </div>
+              <p class="quote">Tokyo&#x27;s AI plan says a lot about how Japan adopts new tech.</p>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">Thumbnail Text</span>
+                  <p>Tokyo builds traceable AI</p>
+                </section>
+                <section class="detail">
+                  <span class="label">Copyright Risk</span>
+                  <p>Low to medium. Government pages are safer than TV segments, but keep screenshots brief and transformed.</p>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">30 Second Script</span>
+                <p class="small">Click inside the box to select the full script for CapCut.</p>
+                <textarea class="copy-box" readonly rows="8" spellcheck="false" onclick="this.focus();this.select();">Tokyo is not only trying to use AI faster. It is trying to use it more carefully. The metropolitan government is funding an administrative AI model built for public services, with a strong focus on accuracy and transparency. That part matters. In Japan, if an AI answer affects rights, paperwork, or public guidance, people expect the logic to be explainable. So the local AI story here may not be about the boldest model. It may be about the most accountable one. That feels very consistent with how Japanese systems usually change.</textarea>
+              </section>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">B-roll Suggestions</span>
+                  <ul><li>Tokyo Metropolitan Government Building exterior</li>
+<li>Forms, documents, or public-service desk visuals</li>
+<li>Laptop screen with blurred administrative text</li>
+<li>People entering a government office area</li></ul>
+                </section>
+                <section class="detail">
+                  <span class="label">Editing Notes</span>
+                  <ul><li>Use caption keywords like &#x27;accuracy,&#x27; &#x27;transparency,&#x27; and &#x27;traceability.&#x27;</li>
+<li>Keep the tone analytical instead of celebratory.</li></ul>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Ideas</span>
+                <ul><li>Original footage around Shinjuku&#x27;s government district</li>
+<li>Your own paperwork or form-like mockups</li>
+<li>GovTech Tokyo or policy screenshots shown briefly with commentary</li></ul>
+              </section>
+              
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Links</span>
+                <ul><li><a href="https://www.itmedia.co.jp/aiplus/article/2605/19/2000000004/" target="_blank" rel="noreferrer">ITmedia AI+: Tokyo seeks an administrative domestic AI model (May 19, 2026)</a></li></ul>
+              </section>
+            
+            </article>
+            
+            <article class="topic-card" id="topic-7">
+              <p class="eyebrow">Topic 7</p>
+              <h2>In Japan, the big AI shift looks more like office software than robots</h2>
+              <div class="pill-row">
+                <span class="pill">Japanese Work Culture</span>
+                <span class="pill">Watchlist</span>
+                <span class="pill">Difficulty: Medium</span>
+              </div>
+              <p class="quote">Japan&#x27;s AI future may look more like documents than humanoid robots.</p>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">Thumbnail Text</span>
+                  <p>100k workers on Claude</p>
+                </section>
+                <section class="detail">
+                  <span class="label">Copyright Risk</span>
+                  <p>Low if you build the visuals yourself and avoid branded corporate video.</p>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">30 Second Script</span>
+                <p class="small">Click inside the box to select the full script for CapCut.</p>
+                <textarea class="copy-box" readonly rows="8" spellcheck="false" onclick="this.focus();this.select();">A lot of people imagine Japan&#x27;s AI future as robots walking around. But the real shift may be much quieter. Fujitsu says it will expand Claude across roughly 100,000 group employees as part of its partnership with Anthropic. That tells me something important. In Japan, major technology changes often arrive first through process, workflow, and documentation. Not spectacle. If AI becomes normal inside very large Japanese companies, the cultural shift could be huge even if it looks boring from the outside. Sometimes the biggest change is the least cinematic one.</textarea>
+              </section>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">B-roll Suggestions</span>
+                  <ul><li>Otemachi or Shinagawa office tower exteriors</li>
+<li>Employees typing on laptops in neutral work settings</li>
+<li>Meeting room table details</li>
+<li>Generic dashboard or document interface close-ups</li></ul>
+                </section>
+                <section class="detail">
+                  <span class="label">Editing Notes</span>
+                  <ul><li>Avoid robot imagery and keep the visual language practical.</li>
+<li>Use one contrast caption: &#x27;Not robots. Office workflow.&#x27;</li></ul>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Ideas</span>
+                <ul><li>Original business-district footage in Tokyo</li>
+<li>Laptop and office desk shots you create yourself</li>
+<li>A simple motion graphic showing enterprise AI becoming routine</li></ul>
+              </section>
+              
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Links</span>
+                <ul><li><a href="https://www.itmedia.co.jp/news/articles/2605/27/news115.html" target="_blank" rel="noreferrer">ITmedia NEWS: Fujitsu partners with Anthropic and expands Claude use (May 27, 2026)</a></li></ul>
+              </section>
+            
+            </article>
+            
+            <article class="topic-card" id="topic-8">
+              <p class="eyebrow">Topic 8</p>
+              <h2>Japan is already preparing for AI that shops before you do</h2>
+              <div class="pill-row">
+                <span class="pill">Japanese Consumer Trends</span>
+                <span class="pill">Watchlist</span>
+                <span class="pill">Difficulty: Medium</span>
+              </div>
+              <p class="quote">The next shopping shift may be AI choosing before you even click.</p>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">Thumbnail Text</span>
+                  <p>AI buys for you?</p>
+                </section>
+                <section class="detail">
+                  <span class="label">Copyright Risk</span>
+                  <p>Medium if you show recognizable store interfaces for too long. Use generic or self-made screens where possible.</p>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">30 Second Script</span>
+                <p class="small">Click inside the box to select the full script for CapCut.</p>
+                <textarea class="copy-box" readonly rows="8" spellcheck="false" onclick="this.focus();this.select();">One new phrase from Nikkei Cross Trend stood out to me: agentic commerce. The idea is simple but a little unsettling. Instead of you comparing products, AI does the comparison and may even handle ordering and payment. In Japan, where convenience already drives so much consumer behavior, that idea could move faster than people expect. If shopping becomes delegation instead of browsing, Japanese retail will not just change how people buy. It could change how brands fight for attention in the first place.</textarea>
+              </section>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">B-roll Suggestions</span>
+                  <ul><li>Phone or laptop with multiple shopping tabs</li>
+<li>Package delivery or doorstep receipt shots</li>
+<li>Someone scrolling product listings</li>
+<li>A simplified AI-style assistant interface you create</li></ul>
+                </section>
+                <section class="detail">
+                  <span class="label">Editing Notes</span>
+                  <ul><li>Start with shopping overload, then cut to the idea of AI deciding for you.</li>
+<li>Use a restrained tone so it feels observational, not alarmist.</li></ul>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Ideas</span>
+                <ul><li>Your own screen recordings of generic shopping flows</li>
+<li>Parcel or delivery pickup footage</li>
+<li>Minimal text animation explaining &#x27;agentic commerce&#x27;</li></ul>
+              </section>
+              
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Links</span>
+                <ul><li><a href="https://prtimes.jp/main/html/rd/p/000000297.000041279.html" target="_blank" rel="noreferrer">Nikkei BP release on the Nikkei Cross Trend 2026 H1 trend map (May 15, 2026)</a></li></ul>
+              </section>
+            
+            </article>
+            
+            <article class="topic-card" id="topic-9">
+              <p class="eyebrow">Topic 9</p>
+              <h2>Why Japan is suddenly obsessed with recovery shoes</h2>
+              <div class="pill-row">
+                <span class="pill">Japanese Consumer Trends</span>
+                <span class="pill">Watchlist</span>
+                <span class="pill">Difficulty: Low</span>
+              </div>
+              <p class="quote">This is such a Japan trend: comfort sold as daily equipment.</p>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">Thumbnail Text</span>
+                  <p>Recovery shoes boom</p>
+                </section>
+                <section class="detail">
+                  <span class="label">Copyright Risk</span>
+                  <p>Low if you shoot your own walking and storefront footage.</p>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">30 Second Script</span>
+                <p class="small">Click inside the box to select the full script for CapCut.</p>
+                <textarea class="copy-box" readonly rows="8" spellcheck="false" onclick="this.focus();this.select();">Recovery shoes are starting to feel like a very Japanese kind of boom. The product promise is not style first. It is relief. Better recovery, less strain, more comfort after long days. That makes sense here. In Japan, people walk a lot, stand a lot, and commute a lot. So when wellness enters consumer culture, it often arrives through practical objects instead of big self-care messaging. A shoe that quietly says, &#x27;let your body survive the city a little better,&#x27; feels exactly like the kind of trend Tokyo would understand immediately.</textarea>
+              </section>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">B-roll Suggestions</span>
+                  <ul><li>Feet and shoes moving through station stairs</li>
+<li>Shoe shop window displays</li>
+<li>Long walking shots on Tokyo sidewalks</li>
+<li>People changing into more comfortable shoes</li></ul>
+                </section>
+                <section class="detail">
+                  <span class="label">Editing Notes</span>
+                  <ul><li>Focus on the body fatigue angle rather than fashion first.</li>
+<li>Use footsteps and stair-climbing shots to make the need feel real.</li></ul>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Ideas</span>
+                <ul><li>Original street-level walking footage</li>
+<li>Retail shoe displays shot from outside or with permission</li>
+<li>Home close-ups of insoles or comfort shoes as stand-ins</li></ul>
+              </section>
+              
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Links</span>
+                <ul><li><a href="https://trend.yahoo.co.jp/archives/864" target="_blank" rel="noreferrer">Yahoo JAPAN trend page: Recovery shoes as an emerging trend (May 22, 2026)</a></li>
+<li><a href="https://article.yahoo.co.jp/detail/fcaaaded1215c1c5fd2c4629b73a1f42fbb11050" target="_blank" rel="noreferrer">Yahoo JAPAN article: Recovery insole strategy expands across brands</a></li></ul>
+              </section>
+            
+            </article>
+            
+            <article class="topic-card" id="topic-10">
+              <p class="eyebrow">Topic 10</p>
+              <h2>Even the Japanese handheld fan is becoming a serious gadget</h2>
+              <div class="pill-row">
+                <span class="pill">Tokyo Lifestyle</span>
+                <span class="pill">Watchlist</span>
+                <span class="pill">Difficulty: Low</span>
+              </div>
+              <p class="quote">In Tokyo summer, even a pocket fan becomes a culture story.</p>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">Thumbnail Text</span>
+                  <p>Japan&#x27;s fan arms race</p>
+                </section>
+                <section class="detail">
+                  <span class="label">Copyright Risk</span>
+                  <p>Low if you use your own commuter and product footage. Avoid branded ad clips.</p>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">30 Second Script</span>
+                <p class="small">Click inside the box to select the full script for CapCut.</p>
+                <textarea class="copy-box" readonly rows="8" spellcheck="false" onclick="this.focus();this.select();">One thing Japan does really well is turning a tiny daily tool into a whole category war. This week Yahoo&#x27;s trend pages showed handheld fans rising again, with more functions and even Dyson joining the space. That sounds small, but in Tokyo it makes perfect sense. Summer here is long, sticky, and intensely practical. So a portable fan is not just cute or seasonal. It becomes part of commute strategy, bag design, and everyday survival. In Japan, heat tech quickly turns into lifestyle design.</textarea>
+              </section>
+              <div class="detail-grid">
+                <section class="detail">
+                  <span class="label">B-roll Suggestions</span>
+                  <ul><li>People using portable fans on station platforms</li>
+<li>Gadget shelves in a variety store</li>
+<li>Summer crosswalk heat haze</li>
+<li>Bag flat lay with a small fan, bottle, and commuter items</li></ul>
+                </section>
+                <section class="detail">
+                  <span class="label">Editing Notes</span>
+                  <ul><li>Open with visible summer heat before showing the gadget itself.</li>
+<li>Keep cuts quick and tactile to make the item feel practical, not gimmicky.</li></ul>
+                </section>
+              </div>
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Ideas</span>
+                <ul><li>Original summer street footage in Tokyo</li>
+<li>Your own tabletop shots of a portable fan or similar gadget</li>
+<li>Store display close-ups from lifestyle shops</li></ul>
+              </section>
+              
+              <section class="detail" style="margin-top: 18px;">
+                <span class="label">Source Links</span>
+                <ul><li><a href="https://trend.yahoo.co.jp/archives/865" target="_blank" rel="noreferrer">Yahoo JAPAN trend page: Handheld fans evolve and Dyson enters (May 22, 2026)</a></li></ul>
+              </section>
+            
+            </article>
+            
+
+      <footer>
+        Generated locally from <code>scripts/generate_daily_topics.py</code>.
+      </footer>
+    </main>
+  </body>
+</html>

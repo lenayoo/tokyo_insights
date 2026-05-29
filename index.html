@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tokyo Insight</title>
+    <style>
+    :root {
+      --bg: #f6f1e8;
+      --bg-soft: #fdfaf4;
+      --paper: rgba(255, 252, 247, 0.88);
+      --paper-strong: rgba(255, 250, 242, 0.97);
+      --ink: #1f2a30;
+      --muted: #627077;
+      --line: rgba(31, 42, 48, 0.12);
+      --accent: #be6a4a;
+      --accent-soft: rgba(190, 106, 74, 0.12);
+      --accent-cool: #6d8b8a;
+      --shadow: 0 24px 60px rgba(42, 36, 31, 0.08);
+      --radius: 22px;
+      --radius-small: 14px;
+      --max: 1080px;
+      --sans: "Avenir Next", "Segoe UI", sans-serif;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background:
+        radial-gradient(circle at top left, rgba(190, 106, 74, 0.14), transparent 32%),
+        radial-gradient(circle at top right, rgba(109, 139, 138, 0.15), transparent 28%),
+        linear-gradient(180deg, #faf6ef 0%, var(--bg) 52%, #efe7dc 100%);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.65;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+      padding: 32px 0 64px;
+    }
+
+    .hero,
+    .panel,
+    .topic-card,
+    .archive-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--serif);
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 4.4rem);
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 64ch;
+    }
+
+    .meta,
+    .pill-row,
+    .actions,
+    .stats,
+    .archive-grid,
+    .topic-grid,
+    .detail-grid,
+    .steps {
+      display: grid;
+      gap: 14px;
+    }
+
+    .actions,
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper-strong);
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .action:hover {
+      border-color: rgba(31, 42, 48, 0.24);
+      transform: translateY(-1px);
+    }
+
+    .panel {
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+
+    .steps,
+    .archive-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .step,
+    .archive-card {
+      padding: 18px;
+      border-radius: var(--radius-small);
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+    }
+
+    .archive-card h3 {
+      margin-bottom: 6px;
+    }
+
+    .topic-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      margin-top: 16px;
+    }
+
+    .topic-link {
+      display: block;
+      text-decoration: none;
+      padding: 16px;
+      border-radius: var(--radius-small);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.28));
+    }
+
+    .topic-link:hover {
+      border-color: rgba(31, 42, 48, 0.24);
+      transform: translateY(-1px);
+    }
+
+    .topic-card {
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    .detail-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 18px;
+    }
+
+    .detail {
+      padding: 16px;
+      border-radius: var(--radius-small);
+      background: rgba(255, 255, 255, 0.52);
+      border: 1px solid var(--line);
+    }
+
+    .label {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.86rem;
+      text-decoration: none;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .archive-meta,
+    .small {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .quote {
+      padding: 16px 18px;
+      border-left: 3px solid var(--accent-cool);
+      background: rgba(109, 139, 138, 0.08);
+      border-radius: 0 14px 14px 0;
+    }
+
+    .copy-box {
+      width: 100%;
+      min-height: 180px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-small);
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--ink);
+      font: inherit;
+      line-height: 1.6;
+      resize: vertical;
+    }
+
+    .copy-box:focus {
+      outline: 2px solid rgba(109, 139, 138, 0.28);
+      border-color: rgba(109, 139, 138, 0.44);
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(calc(100% - 20px), var(--max));
+        padding-top: 20px;
+      }
+
+      .hero,
+      .panel,
+      .topic-card {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 2.1rem;
+      }
+    }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Tokyo Insight</p>
+        <h1>Calm Tokyo observations, built for fast Shorts.</h1>
+        <p class="lead">
+          A lightweight local system for turning daily Tokyo observations into scripts,
+          hooks, B-roll notes, and preview pages without external dependencies.
+        </p>
+        <div class="actions">
+          <a class="action" href="AGENTS.md">Read AGENTS.md</a>
+          <a class="action" href="README.md">Read README</a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Daily Workflow</h2>
+        <div class="steps">
+          <div class="step">
+            <span class="label">1. Generate</span>
+            <p>Run <code>python3 scripts/generate_daily_topics.py</code> to create or refresh today&apos;s files.</p>
+          </div>
+          <div class="step">
+            <span class="label">2. Review</span>
+            <p>Open the daily preview page, skim hooks, scripts, and B-roll, then choose the best 3 to 5 topics.</p>
+          </div>
+          <div class="step">
+            <span class="label">3. Produce</span>
+            <p>Record voiceover, collect clips, and move the selected topics into CapCut or your publishing workflow.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Archive</h2>
+        <p class="muted">Each day produces a JSON topic file and a matching HTML preview.</p>
+        <div class="archive-grid">
+          
+        <article class="archive-card">
+          <p class="eyebrow">Daily Archive</p>
+          <h3>May 29, 2026</h3>
+          <p class="archive-meta">10 topics prepared for Shorts production.</p>
+          <ul><li>Why Tokyo&#x27;s convenience store is quietly becoming a supermarket</li>
+<li>Japan&#x27;s government is already drafting documents with AI</li>
+<li>Why &#x27;quiet quitting&#x27; is finally starting to feel real in Japan</li></ul>
+          <div class="actions">
+            <a class="action" href="posts/2026-05-29.html">Open preview</a>
+            <a class="action" href="data/2026-05-29.json">Open JSON</a>
+          </div>
+        </article>
+        
+        </div>
+      </section>
+
+      <footer>
+        Keep editorial direction in <code>AGENTS.md</code>. Keep automation simple in <code>scripts/</code>.
+      </footer>
+    </main>
+  </body>
+</html>
