@@ -196,6 +196,7 @@
     }
 
     .ghost-button,
+    .tool-button,
     .copy-button {
       display: inline-flex;
       align-items: center;
@@ -210,8 +211,30 @@
     }
 
     .ghost-button:hover,
+    .tool-button:hover,
     .copy-button:hover {
       border-color: rgba(29, 39, 44, 0.22);
+    }
+
+    .tool-button {
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .tool-button--article {
+      background: transparent;
+      color: var(--muted);
+    }
+
+    .tool-button--article:hover {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.42);
+    }
+
+    .copy-button {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: rgba(196, 99, 63, 0.18);
     }
 
     .topic-list {
@@ -292,6 +315,13 @@
       gap: 10px;
     }
 
+    .script-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
     .script-box {
       width: 100%;
       min-height: 150px;
@@ -358,7 +388,7 @@
     <main class="shell">
       <header class="topbar">
         <p class="eyebrow">Tokyo Insight</p>
-        <h1>도쿄에 사는 한국인 크리에이터의 숏츠 작업 보드</h1>
+        <h1>Tokyo Insights shorts board</h1>
         <p class="lead">
           날짜를 누르면 바로 훅, 스크립트, 썸네일 문구, 브롤이 펼쳐집니다.
           뉴스보다 관찰에 가깝고, 완성도보다 반복 가능한 생산 속도에 맞췄습니다.
@@ -417,7 +447,12 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
             <section class="block">
               <span class="label">스크립트</span>
               <div class="script-wrap">
-                <p class="small">클릭해서 바로 선택하거나 복사 버튼으로 가져가면 됩니다.</p>
+                <div class="script-toolbar">
+                  <button class="tool-button" type="button" data-focus-target="script-0-1">스크립트 보기</button>
+                  <a class="tool-button tool-button--article" href="https://article.yahoo.co.jp/detail/2e1924d3bca74d70d8fd1a2e7bcbdbf1b7f1a4a9" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <button class="copy-button" type="button" data-copy-target="script-0-1">복사</button>
+                </div>
+                <p class="small">리서치 확인 후 바로 스크립트 선택, 복사, 영상 제작으로 넘어갈 수 있게 구성했습니다.</p>
                 <textarea
                   class="script-box"
                   id="script-0-1"
@@ -425,9 +460,6 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                   spellcheck="false"
                   onclick="this.focus();this.select();"
                 >도쿄에 살면서 요즘 가장 현실적으로 느끼는 변화 중 하나는 편의점의 역할입니다. 예전에는 급할 때 들르는 곳이었다면, 지금은 작은 슈퍼처럼 일상 장보기를 대신하는 분위기가 더 강해졌습니다. 1인 가구가 많고, 멀리 큰 마트까지 가기엔 시간이 애매한 도시에서는 이런 변화가 아주 자연스럽습니다. 일본의 변화는 대개 조용하게 오는데, 편의점 진열대가 바뀌는 방식은 지금 도쿄의 생활 리듬이 어떻게 달라지는지를 꽤 정확하게 보여줍니다.</textarea>
-                <div>
-                  <button class="copy-button" type="button" data-copy-target="script-0-1">스크립트 복사</button>
-                </div>
               </div>
             </section>
 
@@ -462,7 +494,12 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
             <section class="block">
               <span class="label">스크립트</span>
               <div class="script-wrap">
-                <p class="small">클릭해서 바로 선택하거나 복사 버튼으로 가져가면 됩니다.</p>
+                <div class="script-toolbar">
+                  <button class="tool-button" type="button" data-focus-target="script-0-2">스크립트 보기</button>
+                  <a class="tool-button tool-button--article" href="https://www.itmedia.co.jp/aiplus/article/2605/28/2000000033/" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <button class="copy-button" type="button" data-copy-target="script-0-2">복사</button>
+                </div>
+                <p class="small">리서치 확인 후 바로 스크립트 선택, 복사, 영상 제작으로 넘어갈 수 있게 구성했습니다.</p>
                 <textarea
                   class="script-box"
                   id="script-0-2"
@@ -470,9 +507,6 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                   spellcheck="false"
                   onclick="this.focus();this.select();"
                 >많은 사람이 일본의 AI를 말할 때 로봇부터 떠올리지만, 실제로는 훨씬 더 조용한 곳에서 변화가 시작되고 있습니다. 정부 문서 초안 작성이나 자료 정리 같은 행정 업무에 AI가 이미 들어가기 시작한 겁니다. 도쿄에서 이 흐름이 흥미로운 이유는, 일본은 새로운 기술도 대개 화려하게 밀어붙이기보다 시스템 안쪽부터 천천히 스며들게 만들기 때문입니다. 결국 일본의 AI 전환은 멋진 데모보다 문서, 규정, 업무 흐름에서 먼저 체감될 가능성이 큽니다.</textarea>
-                <div>
-                  <button class="copy-button" type="button" data-copy-target="script-0-2">스크립트 복사</button>
-                </div>
               </div>
             </section>
 
@@ -507,7 +541,12 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
             <section class="block">
               <span class="label">스크립트</span>
               <div class="script-wrap">
-                <p class="small">클릭해서 바로 선택하거나 복사 버튼으로 가져가면 됩니다.</p>
+                <div class="script-toolbar">
+                  <button class="tool-button" type="button" data-focus-target="script-0-3">스크립트 보기</button>
+                  <a class="tool-button tool-button--article" href="https://www.itmedia.co.jp/business/articles/2605/14/news006.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <button class="copy-button" type="button" data-copy-target="script-0-3">복사</button>
+                </div>
+                <p class="small">리서치 확인 후 바로 스크립트 선택, 복사, 영상 제작으로 넘어갈 수 있게 구성했습니다.</p>
                 <textarea
                   class="script-box"
                   id="script-0-3"
@@ -515,9 +554,6 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                   spellcheck="false"
                   onclick="this.focus();this.select();"
                 >일본에서 일 이야기를 할 때 보통은 과로와 인내를 떠올리지만, 요즘은 조금 다른 공기도 느껴집니다. 겉으로 크게 불만을 말하지는 않지만, 승진이나 과도한 헌신에서 한 발 물러서는 사람들이 늘고 있다는 점입니다. 일본에서는 변화가 늘 천천히 보이기 때문에 이런 흐름은 더 의미가 있습니다. 예전처럼 회사가 삶의 중심이어야 한다는 감각이 약해지고 있고, 사람들은 조용하게 자기 일과 삶의 경계를 다시 그리고 있는 것처럼 보입니다.</textarea>
-                <div>
-                  <button class="copy-button" type="button" data-copy-target="script-0-3">스크립트 복사</button>
-                </div>
               </div>
             </section>
 
@@ -552,7 +588,12 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
             <section class="block">
               <span class="label">스크립트</span>
               <div class="script-wrap">
-                <p class="small">클릭해서 바로 선택하거나 복사 버튼으로 가져가면 됩니다.</p>
+                <div class="script-toolbar">
+                  <button class="tool-button" type="button" data-focus-target="script-0-4">스크립트 보기</button>
+                  <a class="tool-button tool-button--article" href="https://www.radionikkei.jp/trendy/_250330.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <button class="copy-button" type="button" data-copy-target="script-0-4">복사</button>
+                </div>
+                <p class="small">리서치 확인 후 바로 스크립트 선택, 복사, 영상 제작으로 넘어갈 수 있게 구성했습니다.</p>
                 <textarea
                   class="script-box"
                   id="script-0-4"
@@ -560,9 +601,6 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                   spellcheck="false"
                   onclick="this.focus();this.select();"
                 >도쿄 생활을 하다 보면 효율적인 도시라는 말을 자주 떠올리게 되지만, 동시에 꽤 지치는 도시이기도 합니다. 그래서 요즘 일본 소비에서 흥미로운 건, 시간을 아끼는 것보다 마음이 덜 소모되는 경험을 찾는 흐름입니다. 선택지가 너무 많지 않고, 비교 피로가 적고, 들어가면 바로 이해되는 매장이나 서비스가 더 매력적으로 보이는 거죠. 결국 앞으로는 더 빠른 서비스보다 덜 피곤한 서비스가 프리미엄이 될 수도 있다는 얘기인데, 이건 도쿄 같은 도시에서 특히 설득력이 있습니다.</textarea>
-                <div>
-                  <button class="copy-button" type="button" data-copy-target="script-0-4">스크립트 복사</button>
-                </div>
               </div>
             </section>
 
@@ -597,7 +635,12 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
             <section class="block">
               <span class="label">스크립트</span>
               <div class="script-wrap">
-                <p class="small">클릭해서 바로 선택하거나 복사 버튼으로 가져가면 됩니다.</p>
+                <div class="script-toolbar">
+                  <button class="tool-button" type="button" data-focus-target="script-0-5">스크립트 보기</button>
+                  <a class="tool-button tool-button--article" href="https://www.itmedia.co.jp/news/articles/2605/19/news114.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <button class="copy-button" type="button" data-copy-target="script-0-5">복사</button>
+                </div>
+                <p class="small">리서치 확인 후 바로 스크립트 선택, 복사, 영상 제작으로 넘어갈 수 있게 구성했습니다.</p>
                 <textarea
                   class="script-box"
                   id="script-0-5"
@@ -605,9 +648,6 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                   spellcheck="false"
                   onclick="this.focus();this.select();"
                 >AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도쿄에서는 꽤 현실적인 도구가 될 수도 있습니다. 이 도시는 간판, 메뉴, 역 안내, 작은 글씨가 끝없이 이어지는 곳이라 시선이 늘 바쁩니다. 그래서 번역이나 정보 보조가 눈앞에서 바로 이뤄진다면, 도쿄에서는 그 효용이 아주 빨리 드러날 수 있습니다. 중요한 건 기술의 화려함보다 일상에 자연스럽게 섞이느냐인데, 그런 의미에서 도쿄는 AI 안경의 가장 정직한 테스트 장소처럼 보입니다.</textarea>
-                <div>
-                  <button class="copy-button" type="button" data-copy-target="script-0-5">스크립트 복사</button>
-                </div>
               </div>
             </section>
 
@@ -680,6 +720,16 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
           window.setTimeout(() => {
             button.textContent = original;
           }, 1200);
+        });
+      });
+
+      document.querySelectorAll("[data-focus-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const field = document.getElementById(button.dataset.focusTarget);
+          if (!field) return;
+          field.scrollIntoView({ behavior: "smooth", block: "center" });
+          field.focus();
+          field.select();
         });
       });
 

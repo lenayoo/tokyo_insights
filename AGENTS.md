@@ -106,6 +106,7 @@ tokyo-insight/
       "hook": "도쿄 살면서 놀란 것 중 하나.",
       "script": "...",
       "thumbnail_text": "일본은 아직 현금사회",
+      "source_url": "https://example.com/article",
       "broll": [
         "편의점 계산",
         "도쿄 거리",
@@ -126,7 +127,8 @@ tokyo-insight/
 2. 썸네일 문구
 3. 2초 후킹 문장
 4. 30초 쇼츠 스크립트
-5. 추천 B-roll
+5. 원문 기사 URL
+6. 추천 B-roll
 
 만 생성.
 
@@ -245,3 +247,71 @@ tokyo-insight/
 
 그리고:
 완벽보다 반복.
+
+# Source Link Requirements
+
+각 토픽에는 반드시 원본 기사 링크(source_url)를 포함한다.
+
+예시:
+
+```json id="ow2a3m"
+{
+  "title": "일본은 왜 아직도 현금을 많이 쓸까?",
+  "hook": "도쿄 살면서 놀란 것 중 하나.",
+  "script": "...",
+  "thumbnail": "일본은 아직 현금사회",
+  "source_url": "https://news.yahoo.co.jp/...",
+  "broll": [
+    "편의점 계산",
+    "도쿄 거리"
+  ]
+}
+```
+
+---
+
+# HTML UI Rules
+
+각 토픽 카드에는 반드시 아래 버튼들을 표시:
+
+* [스크립트 보기]
+* [기사 보기]
+
+"기사 보기" 버튼 클릭 시:
+해당 source_url 기사로 새 탭 이동.
+
+---
+
+# UX Philosophy
+
+Tokyo Insight는 단순 아카이브가 아니라:
+
+"빠르게 Shorts를 제작하기 위한 운영 툴"
+
+처럼 동작해야 한다.
+
+즉:
+
+* 한 화면에서 빠르게 확인 가능
+* 원본 기사 바로 접근 가능
+* 클릭 최소화
+* 제작 흐름 끊기지 않게 설계
+
+---
+
+# Source Handling Rules
+
+뉴스/트렌드 수집 시:
+
+* 반드시 원본 기사 URL 저장
+* source_url 누락 금지
+* 기사 링크는 HTML 카드 우측 버튼으로 표시
+* 새 탭(target="_blank")으로 열기
+
+권장 소스:
+
+* Yahoo Japan
+* ITmedia
+* Nikkei Trend
+* PR Times
+* 일본 SNS 트렌드

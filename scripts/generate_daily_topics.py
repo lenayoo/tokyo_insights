@@ -32,6 +32,7 @@ def sample_topics() -> list[dict]:
                 "작은 장바구니를 든 사람들",
                 "역 앞 상점가 워킹샷",
             ],
+            "source_url": "https://article.yahoo.co.jp/detail/2e1924d3bca74d70d8fd1a2e7bcbdbf1b7f1a4a9",
         },
         {
             "title": "일본 정부 문서를 AI가 먼저 쓰기 시작했다",
@@ -49,6 +50,7 @@ def sample_topics() -> list[dict]:
                 "오피스 출근 인파",
                 "노트북 화면 위 손 움직임",
             ],
+            "source_url": "https://www.itmedia.co.jp/aiplus/article/2605/28/2000000033/",
         },
         {
             "title": "일본에서도 '조용한 퇴사'가 보이기 시작했다",
@@ -66,6 +68,7 @@ def sample_topics() -> list[dict]:
                 "노트북을 덮는 손",
                 "퇴근 후 조용한 주택가 골목",
             ],
+            "source_url": "https://www.itmedia.co.jp/business/articles/2605/14/news006.html",
         },
         {
             "title": "일본 소비 트렌드가 '시간 절약'에서 '마음 보호'로 이동 중이다",
@@ -83,6 +86,7 @@ def sample_topics() -> list[dict]:
                 "선택 앞에서 멈춘 손",
                 "도쿄 번화가 워킹샷",
             ],
+            "source_url": "https://www.radionikkei.jp/trendy/_250330.html",
         },
         {
             "title": "AI 안경이 일본에 들어오면 가장 먼저 시험대가 되는 곳은 도쿄다",
@@ -100,6 +104,7 @@ def sample_topics() -> list[dict]:
                 "안경을 손에 든 컷",
                 "도심 인파 와이드샷",
             ],
+            "source_url": "https://www.itmedia.co.jp/news/articles/2605/19/news114.html",
         },
     ]
 
@@ -117,6 +122,12 @@ def normalize_topic(topic: dict) -> dict:
     if not script:
         script = topic.get("30_second_script", "")
 
+    source_url = topic.get("source_url", "")
+    if not source_url and topic.get("source_links"):
+        first_link = topic["source_links"][0]
+        if isinstance(first_link, dict):
+            source_url = first_link.get("url", "")
+
     return {
         "title": str(topic.get("title", "")).strip(),
         "hook": str(topic.get("hook", "")).strip(),
@@ -125,6 +136,7 @@ def normalize_topic(topic: dict) -> dict:
             topic.get("thumbnail_text", topic.get("thumbnail", ""))
         ).strip(),
         "broll": [str(item).strip() for item in broll if str(item).strip()],
+        "source_url": str(source_url).strip(),
     }
 
 
@@ -360,6 +372,7 @@ def page_styles() -> str:
     }
 
     .ghost-button,
+    .tool-button,
     .copy-button {
       display: inline-flex;
       align-items: center;
@@ -374,8 +387,30 @@ def page_styles() -> str:
     }
 
     .ghost-button:hover,
+    .tool-button:hover,
     .copy-button:hover {
       border-color: rgba(29, 39, 44, 0.22);
+    }
+
+    .tool-button {
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .tool-button--article {
+      background: transparent;
+      color: var(--muted);
+    }
+
+    .tool-button--article:hover {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.42);
+    }
+
+    .copy-button {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: rgba(196, 99, 63, 0.18);
     }
 
     .topic-list {
@@ -456,6 +491,13 @@ def page_styles() -> str:
       gap: 10px;
     }
 
+    .script-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
     .script-box {
       width: 100%;
       min-height: 150px;
@@ -526,6 +568,7 @@ def render_list(items: list[str]) -> str:
 
 def render_topic(topic: dict, topic_index: int, day_index: int) -> str:
     script_id = f"script-{day_index}-{topic_index}"
+    source_url = html.escape(topic["source_url"])
     return f"""
         <article class="topic-card">
           <div class="topic-head">
@@ -540,7 +583,12 @@ def render_topic(topic: dict, topic_index: int, day_index: int) -> str:
             <section class="block">
               <span class="label">스크립트</span>
               <div class="script-wrap">
-                <p class="small">클릭해서 바로 선택하거나 복사 버튼으로 가져가면 됩니다.</p>
+                <div class="script-toolbar">
+                  <button class="tool-button" type="button" data-focus-target="{script_id}">스크립트 보기</button>
+                  <a class="tool-button tool-button--article" href="{source_url}" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <button class="copy-button" type="button" data-copy-target="{script_id}">복사</button>
+                </div>
+                <p class="small">리서치 확인 후 바로 스크립트 선택, 복사, 영상 제작으로 넘어갈 수 있게 구성했습니다.</p>
                 <textarea
                   class="script-box"
                   id="{script_id}"
@@ -548,9 +596,6 @@ def render_topic(topic: dict, topic_index: int, day_index: int) -> str:
                   spellcheck="false"
                   onclick="this.focus();this.select();"
                 >{html.escape(topic["script"])}</textarea>
-                <div>
-                  <button class="copy-button" type="button" data-copy-target="{script_id}">스크립트 복사</button>
-                </div>
               </div>
             </section>
 
@@ -696,6 +741,16 @@ def render_index_html(archives: list[dict]) -> str:
           window.setTimeout(() => {{
             button.textContent = original;
           }}, 1200);
+        }});
+      }});
+
+      document.querySelectorAll("[data-focus-target]").forEach((button) => {{
+        button.addEventListener("click", () => {{
+          const field = document.getElementById(button.dataset.focusTarget);
+          if (!field) return;
+          field.scrollIntoView({{ behavior: "smooth", block: "center" }});
+          field.focus();
+          field.select();
         }});
       }});
 

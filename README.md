@@ -31,7 +31,7 @@ python3 scripts/generate_daily_topics.py
 
 1. 날짜를 클릭합니다.
 2. 주제 제목, 훅, 스크립트, 썸네일 문구, 브롤을 바로 확인합니다.
-3. 스크립트를 개별 복사하거나 하루 분량으로 한 번에 복사합니다.
+3. 카드 안에서 `스크립트 보기`, `기사 보기`, `복사`를 바로 사용합니다.
 4. 바로 CapCut 작업으로 넘어갑니다.
 
 ## JSON 형식
@@ -45,6 +45,7 @@ python3 scripts/generate_daily_topics.py
       "hook": "도쿄에서는 편의점이 이제 장보는 곳이 되어가고 있습니다.",
       "script": "30초 내외 내레이션",
       "thumbnail_text": "편의점이 장보는 곳?",
+      "source_url": "https://example.com/article",
       "broll": [
         "편의점 외관",
         "진열대 클로즈업"
