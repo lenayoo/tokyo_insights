@@ -1,27 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tokyo Insight</title>
     <style>
     :root {
-      --bg: #f6f1e8;
-      --bg-soft: #fdfaf4;
-      --paper: rgba(255, 252, 247, 0.88);
-      --paper-strong: rgba(255, 250, 242, 0.97);
-      --ink: #1f2a30;
-      --muted: #627077;
-      --line: rgba(31, 42, 48, 0.12);
-      --accent: #be6a4a;
-      --accent-soft: rgba(190, 106, 74, 0.12);
-      --accent-cool: #6d8b8a;
-      --shadow: 0 24px 60px rgba(42, 36, 31, 0.08);
-      --radius: 22px;
+      --bg: #f4efe7;
+      --bg-accent: #ebe3d6;
+      --paper: rgba(255, 252, 247, 0.92);
+      --paper-strong: rgba(255, 250, 244, 0.98);
+      --ink: #1d272c;
+      --muted: #67747a;
+      --line: rgba(29, 39, 44, 0.1);
+      --accent: #c4633f;
+      --accent-soft: rgba(196, 99, 63, 0.12);
+      --shadow: 0 18px 42px rgba(35, 31, 28, 0.08);
+      --radius: 20px;
       --radius-small: 14px;
-      --max: 1080px;
-      --sans: "Avenir Next", "Segoe UI", sans-serif;
-      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --max: 1120px;
+      --sans: "Hiragino Sans", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
     }
 
     * {
@@ -30,12 +28,11 @@
 
     html {
       background:
-        radial-gradient(circle at top left, rgba(190, 106, 74, 0.14), transparent 32%),
-        radial-gradient(circle at top right, rgba(109, 139, 138, 0.15), transparent 28%),
-        linear-gradient(180deg, #faf6ef 0%, var(--bg) 52%, #efe7dc 100%);
+        radial-gradient(circle at top left, rgba(196, 99, 63, 0.12), transparent 32%),
+        linear-gradient(180deg, #faf6ef 0%, var(--bg) 48%, var(--bg-accent) 100%);
       color: var(--ink);
       font-family: var(--sans);
-      line-height: 1.65;
+      line-height: 1.6;
       scroll-behavior: smooth;
     }
 
@@ -44,186 +41,272 @@
       min-height: 100vh;
     }
 
-    a {
-      color: inherit;
+    button,
+    textarea {
+      font: inherit;
     }
 
     .shell {
-      width: min(calc(100% - 32px), var(--max));
+      width: min(calc(100% - 24px), var(--max));
       margin: 0 auto;
-      padding: 32px 0 64px;
+      padding: 20px 0 48px;
     }
 
-    .hero,
-    .panel,
-    .topic-card,
-    .archive-card {
+    .topbar,
+    .date-rail,
+    .day-panel,
+    .topic-card {
       background: var(--paper);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
     }
 
-    .hero {
-      padding: 28px;
-      margin-bottom: 22px;
+    .topbar {
+      padding: 22px;
+      margin-bottom: 14px;
     }
 
     .eyebrow {
+      margin: 0 0 8px;
       color: var(--accent);
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      margin: 0 0 10px;
     }
 
     h1,
     h2,
     h3 {
-      font-family: var(--serif);
-      line-height: 1.15;
       margin: 0;
+      line-height: 1.2;
     }
 
     h1 {
-      font-size: clamp(2.2rem, 6vw, 4.4rem);
+      font-size: clamp(1.8rem, 5vw, 3.4rem);
+      letter-spacing: -0.03em;
       margin-bottom: 10px;
     }
 
     h2 {
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      margin-bottom: 16px;
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
     }
 
     h3 {
-      font-size: 1.2rem;
-      margin-bottom: 12px;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
     }
 
     p {
-      margin: 0 0 14px;
+      margin: 0;
     }
 
     .lead {
       color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 64ch;
+      max-width: 56ch;
     }
 
-    .meta,
-    .pill-row,
-    .actions,
-    .stats,
-    .archive-grid,
-    .topic-grid,
-    .detail-grid,
-    .steps {
+    .date-rail {
+      position: sticky;
+      top: 10px;
+      z-index: 5;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .date-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .date-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .date-tab {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      min-width: 102px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper-strong);
+      color: var(--ink);
+      cursor: pointer;
+      transition: border-color 140ms ease, transform 140ms ease, background 140ms ease;
+    }
+
+    .date-tab:hover {
+      transform: translateY(-1px);
+      border-color: rgba(29, 39, 44, 0.22);
+    }
+
+    .date-tab.is-active {
+      background: var(--accent-soft);
+      border-color: rgba(196, 99, 63, 0.3);
+      color: var(--accent);
+    }
+
+    .date-tab strong {
+      font-size: 0.98rem;
+    }
+
+    .date-tab span {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .date-tab.is-active span {
+      color: rgba(196, 99, 63, 0.84);
+    }
+
+    .day-panel {
+      padding: 20px;
+    }
+
+    .day-panel[hidden] {
+      display: none;
+    }
+
+    .day-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .day-meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .day-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ghost-button,
+    .copy-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 9px 14px;
+      background: var(--paper-strong);
+      color: var(--ink);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .ghost-button:hover,
+    .copy-button:hover {
+      border-color: rgba(29, 39, 44, 0.22);
+    }
+
+    .topic-list {
       display: grid;
       gap: 14px;
     }
 
-    .actions,
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 20px;
+    .topic-card {
+      padding: 18px;
     }
 
-    .action {
+    .topic-head {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .topic-number {
+      flex: 0 0 auto;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--paper-strong);
-      text-decoration: none;
+      justify-content: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .hook {
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      background: rgba(196, 99, 63, 0.08);
       color: var(--ink);
     }
 
-    .action:hover {
-      border-color: rgba(31, 42, 48, 0.24);
-      transform: translateY(-1px);
-    }
-
-    .panel {
-      padding: 24px;
-      margin-bottom: 22px;
-    }
-
-    .steps,
-    .archive-grid {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-
-    .step,
-    .archive-card {
-      padding: 18px;
-      border-radius: var(--radius-small);
-      background: var(--paper-strong);
-      border: 1px solid var(--line);
-    }
-
-    .archive-card h3 {
-      margin-bottom: 6px;
-    }
-
     .topic-grid {
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 14px;
     }
 
-    .topic-link {
-      display: block;
-      text-decoration: none;
-      padding: 16px;
-      border-radius: var(--radius-small);
+    .block {
       border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.28));
-    }
-
-    .topic-link:hover {
-      border-color: rgba(31, 42, 48, 0.24);
-      transform: translateY(-1px);
-    }
-
-    .topic-card {
-      padding: 24px;
-      margin-bottom: 18px;
-    }
-
-    .detail-grid {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      margin-top: 18px;
-    }
-
-    .detail {
-      padding: 16px;
       border-radius: var(--radius-small);
-      background: rgba(255, 255, 255, 0.52);
-      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.55);
+      padding: 14px;
     }
 
     .label {
       display: inline-block;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       color: var(--accent);
-      font-size: 0.76rem;
-      letter-spacing: 0.12em;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
-    .pill {
+    .thumbnail-chip {
       display: inline-flex;
       align-items: center;
-      padding: 7px 11px;
+      padding: 8px 11px;
       border-radius: 999px;
       background: var(--accent-soft);
       color: var(--accent);
-      font-size: 0.86rem;
-      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .script-wrap {
+      display: grid;
+      gap: 10px;
+    }
+
+    .script-box {
+      width: 100%;
+      min-height: 150px;
+      resize: vertical;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-small);
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    .script-box:focus {
+      outline: 2px solid rgba(196, 99, 63, 0.18);
+      border-color: rgba(196, 99, 63, 0.28);
     }
 
     ul {
@@ -235,122 +318,384 @@
       margin-top: 6px;
     }
 
-    .muted {
-      color: var(--muted);
-    }
-
-    .archive-meta,
     .small {
       color: var(--muted);
-      font-size: 0.94rem;
+      font-size: 0.92rem;
     }
 
-    .quote {
-      padding: 16px 18px;
-      border-left: 3px solid var(--accent-cool);
-      background: rgba(109, 139, 138, 0.08);
-      border-radius: 0 14px 14px 0;
-    }
-
-    .copy-box {
-      width: 100%;
-      min-height: 180px;
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-small);
-      background: rgba(255, 255, 255, 0.82);
-      color: var(--ink);
-      font: inherit;
-      line-height: 1.6;
-      resize: vertical;
-    }
-
-    .copy-box:focus {
-      outline: 2px solid rgba(109, 139, 138, 0.28);
-      border-color: rgba(109, 139, 138, 0.44);
-    }
-
-    footer {
-      margin-top: 28px;
+    .empty {
+      padding: 28px;
+      text-align: center;
       color: var(--muted);
-      font-size: 0.95rem;
+    }
+
+    @media (min-width: 760px) {
+      .topic-grid.two-col {
+        grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+      }
     }
 
     @media (max-width: 640px) {
       .shell {
-        width: min(calc(100% - 20px), var(--max));
-        padding-top: 20px;
+        width: min(calc(100% - 16px), var(--max));
+        padding-top: 14px;
       }
 
-      .hero,
-      .panel,
+      .topbar,
+      .date-rail,
+      .day-panel,
       .topic-card {
-        padding: 20px;
+        padding: 16px;
       }
 
-      h1 {
-        font-size: 2.1rem;
+      .date-tab {
+        min-width: 88px;
       }
     }
     </style>
   </head>
   <body>
     <main class="shell">
-      <section class="hero">
+      <header class="topbar">
         <p class="eyebrow">Tokyo Insight</p>
-        <h1>Calm Tokyo observations, built for fast Shorts.</h1>
+        <h1>도쿄에 사는 한국인 크리에이터의 숏츠 작업 보드</h1>
         <p class="lead">
-          A lightweight local system for turning daily Tokyo observations into scripts,
-          hooks, B-roll notes, and preview pages without external dependencies.
+          날짜를 누르면 바로 훅, 스크립트, 썸네일 문구, 브롤이 펼쳐집니다.
+          뉴스보다 관찰에 가깝고, 완성도보다 반복 가능한 생산 속도에 맞췄습니다.
         </p>
-        <div class="actions">
-          <a class="action" href="AGENTS.md">Read AGENTS.md</a>
-          <a class="action" href="README.md">Read README</a>
-        </div>
-      </section>
+      </header>
 
-      <section class="panel">
-        <h2>Daily Workflow</h2>
-        <div class="steps">
-          <div class="step">
-            <span class="label">1. Generate</span>
-            <p>Run <code>python3 scripts/generate_daily_topics.py</code> to create or refresh today&apos;s files.</p>
-          </div>
-          <div class="step">
-            <span class="label">2. Review</span>
-            <p>Open the daily preview page, skim hooks, scripts, and B-roll, then choose the best 3 to 5 topics.</p>
-          </div>
-          <div class="step">
-            <span class="label">3. Produce</span>
-            <p>Record voiceover, collect clips, and move the selected topics into CapCut or your publishing workflow.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel">
-        <h2>Archive</h2>
-        <p class="muted">Each day produces a JSON topic file and a matching HTML preview.</p>
-        <div class="archive-grid">
+      <section class="date-rail">
+        <div class="date-scroll">
           
-        <article class="archive-card">
-          <p class="eyebrow">Daily Archive</p>
-          <h3>May 29, 2026</h3>
-          <p class="archive-meta">10 topics prepared for Shorts production.</p>
-          <ul><li>Why Tokyo&#x27;s convenience store is quietly becoming a supermarket</li>
-<li>Japan&#x27;s government is already drafting documents with AI</li>
-<li>Why &#x27;quiet quitting&#x27; is finally starting to feel real in Japan</li></ul>
-          <div class="actions">
-            <a class="action" href="posts/2026-05-29.html">Open preview</a>
-            <a class="action" href="data/2026-05-29.json">Open JSON</a>
+            <button class="date-tab is-active" type="button" data-target="day-2026-05-29">
+              <strong>05.29</strong>
+              <span>5개 주제</span>
+            </button>
+            
+        </div>
+      </section>
+
+      
+      <section class="day-panel" id="day-2026-05-29">
+        <div class="day-header">
+          <div>
+            <p class="eyebrow">Daily Shorts Board</p>
+            <h2>2026년 5월 29일</h2>
+            <p class="day-meta">5개 주제. 도쿄에서 바로 찍고 바로 쓰기 좋게 정리했습니다.</p>
+          </div>
+          <div class="day-actions">
+            <button class="ghost-button" type="button" data-copy-bundle-target="bundle-0">하루 스크립트 복사</button>
+          </div>
+        </div>
+        <textarea id="bundle-0" hidden>1. 도쿄 편의점이 슈퍼마켓처럼 바뀌는 이유
+도쿄에 살면서 요즘 가장 현실적으로 느끼는 변화 중 하나는 편의점의 역할입니다. 예전에는 급할 때 들르는 곳이었다면, 지금은 작은 슈퍼처럼 일상 장보기를 대신하는 분위기가 더 강해졌습니다. 1인 가구가 많고, 멀리 큰 마트까지 가기엔 시간이 애매한 도시에서는 이런 변화가 아주 자연스럽습니다. 일본의 변화는 대개 조용하게 오는데, 편의점 진열대가 바뀌는 방식은 지금 도쿄의 생활 리듬이 어떻게 달라지는지를 꽤 정확하게 보여줍니다.
+
+2. 일본 정부 문서를 AI가 먼저 쓰기 시작했다
+많은 사람이 일본의 AI를 말할 때 로봇부터 떠올리지만, 실제로는 훨씬 더 조용한 곳에서 변화가 시작되고 있습니다. 정부 문서 초안 작성이나 자료 정리 같은 행정 업무에 AI가 이미 들어가기 시작한 겁니다. 도쿄에서 이 흐름이 흥미로운 이유는, 일본은 새로운 기술도 대개 화려하게 밀어붙이기보다 시스템 안쪽부터 천천히 스며들게 만들기 때문입니다. 결국 일본의 AI 전환은 멋진 데모보다 문서, 규정, 업무 흐름에서 먼저 체감될 가능성이 큽니다.
+
+3. 일본에서도 &#x27;조용한 퇴사&#x27;가 보이기 시작했다
+일본에서 일 이야기를 할 때 보통은 과로와 인내를 떠올리지만, 요즘은 조금 다른 공기도 느껴집니다. 겉으로 크게 불만을 말하지는 않지만, 승진이나 과도한 헌신에서 한 발 물러서는 사람들이 늘고 있다는 점입니다. 일본에서는 변화가 늘 천천히 보이기 때문에 이런 흐름은 더 의미가 있습니다. 예전처럼 회사가 삶의 중심이어야 한다는 감각이 약해지고 있고, 사람들은 조용하게 자기 일과 삶의 경계를 다시 그리고 있는 것처럼 보입니다.
+
+4. 일본 소비 트렌드가 &#x27;시간 절약&#x27;에서 &#x27;마음 보호&#x27;로 이동 중이다
+도쿄 생활을 하다 보면 효율적인 도시라는 말을 자주 떠올리게 되지만, 동시에 꽤 지치는 도시이기도 합니다. 그래서 요즘 일본 소비에서 흥미로운 건, 시간을 아끼는 것보다 마음이 덜 소모되는 경험을 찾는 흐름입니다. 선택지가 너무 많지 않고, 비교 피로가 적고, 들어가면 바로 이해되는 매장이나 서비스가 더 매력적으로 보이는 거죠. 결국 앞으로는 더 빠른 서비스보다 덜 피곤한 서비스가 프리미엄이 될 수도 있다는 얘기인데, 이건 도쿄 같은 도시에서 특히 설득력이 있습니다.
+
+5. AI 안경이 일본에 들어오면 가장 먼저 시험대가 되는 곳은 도쿄다
+AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도쿄에서는 꽤 현실적인 도구가 될 수도 있습니다. 이 도시는 간판, 메뉴, 역 안내, 작은 글씨가 끝없이 이어지는 곳이라 시선이 늘 바쁩니다. 그래서 번역이나 정보 보조가 눈앞에서 바로 이뤄진다면, 도쿄에서는 그 효용이 아주 빨리 드러날 수 있습니다. 중요한 건 기술의 화려함보다 일상에 자연스럽게 섞이느냐인데, 그런 의미에서 도쿄는 AI 안경의 가장 정직한 테스트 장소처럼 보입니다.</textarea>
+        <div class="topic-list">
+          
+        <article class="topic-card">
+          <div class="topic-head">
+            <span class="topic-number">1</span>
+            <div>
+              <h3>도쿄 편의점이 슈퍼마켓처럼 바뀌는 이유</h3>
+              <p class="hook">도쿄에서는 편의점이 이제 장보는 곳이 되어가고 있습니다.</p>
+            </div>
+          </div>
+
+          <div class="topic-grid two-col">
+            <section class="block">
+              <span class="label">스크립트</span>
+              <div class="script-wrap">
+                <p class="small">클릭해서 바로 선택하거나 복사 버튼으로 가져가면 됩니다.</p>
+                <textarea
+                  class="script-box"
+                  id="script-0-1"
+                  readonly
+                  spellcheck="false"
+                  onclick="this.focus();this.select();"
+                >도쿄에 살면서 요즘 가장 현실적으로 느끼는 변화 중 하나는 편의점의 역할입니다. 예전에는 급할 때 들르는 곳이었다면, 지금은 작은 슈퍼처럼 일상 장보기를 대신하는 분위기가 더 강해졌습니다. 1인 가구가 많고, 멀리 큰 마트까지 가기엔 시간이 애매한 도시에서는 이런 변화가 아주 자연스럽습니다. 일본의 변화는 대개 조용하게 오는데, 편의점 진열대가 바뀌는 방식은 지금 도쿄의 생활 리듬이 어떻게 달라지는지를 꽤 정확하게 보여줍니다.</textarea>
+                <div>
+                  <button class="copy-button" type="button" data-copy-target="script-0-1">스크립트 복사</button>
+                </div>
+              </div>
+            </section>
+
+            <div class="topic-grid">
+              <section class="block">
+                <span class="label">썸네일 문구</span>
+                <div class="thumbnail-chip">편의점이 장보는 곳?</div>
+              </section>
+
+              <section class="block">
+                <span class="label">브롤</span>
+                <ul><li>주택가 근처 편의점 외관</li>
+<li>채소나 반찬류 진열 클로즈업</li>
+<li>작은 장바구니를 든 사람들</li>
+<li>역 앞 상점가 워킹샷</li></ul>
+              </section>
+            </div>
           </div>
         </article>
-        
+    
+
+        <article class="topic-card">
+          <div class="topic-head">
+            <span class="topic-number">2</span>
+            <div>
+              <h3>일본 정부 문서를 AI가 먼저 쓰기 시작했다</h3>
+              <p class="hook">일본의 AI 변화는 스타트업보다 행정에서 먼저 보이고 있습니다.</p>
+            </div>
+          </div>
+
+          <div class="topic-grid two-col">
+            <section class="block">
+              <span class="label">스크립트</span>
+              <div class="script-wrap">
+                <p class="small">클릭해서 바로 선택하거나 복사 버튼으로 가져가면 됩니다.</p>
+                <textarea
+                  class="script-box"
+                  id="script-0-2"
+                  readonly
+                  spellcheck="false"
+                  onclick="this.focus();this.select();"
+                >많은 사람이 일본의 AI를 말할 때 로봇부터 떠올리지만, 실제로는 훨씬 더 조용한 곳에서 변화가 시작되고 있습니다. 정부 문서 초안 작성이나 자료 정리 같은 행정 업무에 AI가 이미 들어가기 시작한 겁니다. 도쿄에서 이 흐름이 흥미로운 이유는, 일본은 새로운 기술도 대개 화려하게 밀어붙이기보다 시스템 안쪽부터 천천히 스며들게 만들기 때문입니다. 결국 일본의 AI 전환은 멋진 데모보다 문서, 규정, 업무 흐름에서 먼저 체감될 가능성이 큽니다.</textarea>
+                <div>
+                  <button class="copy-button" type="button" data-copy-target="script-0-2">스크립트 복사</button>
+                </div>
+              </div>
+            </section>
+
+            <div class="topic-grid">
+              <section class="block">
+                <span class="label">썸네일 문구</span>
+                <div class="thumbnail-chip">정부 문서도 AI?</div>
+              </section>
+
+              <section class="block">
+                <span class="label">브롤</span>
+                <ul><li>카스미가세키 건물 외관</li>
+<li>문서와 키보드 클로즈업</li>
+<li>오피스 출근 인파</li>
+<li>노트북 화면 위 손 움직임</li></ul>
+              </section>
+            </div>
+          </div>
+        </article>
+    
+
+        <article class="topic-card">
+          <div class="topic-head">
+            <span class="topic-number">3</span>
+            <div>
+              <h3>일본에서도 &#x27;조용한 퇴사&#x27;가 보이기 시작했다</h3>
+              <p class="hook">야근 문화로 유명한 일본에서도 일에 대한 거리두기가 보이기 시작했습니다.</p>
+            </div>
+          </div>
+
+          <div class="topic-grid two-col">
+            <section class="block">
+              <span class="label">스크립트</span>
+              <div class="script-wrap">
+                <p class="small">클릭해서 바로 선택하거나 복사 버튼으로 가져가면 됩니다.</p>
+                <textarea
+                  class="script-box"
+                  id="script-0-3"
+                  readonly
+                  spellcheck="false"
+                  onclick="this.focus();this.select();"
+                >일본에서 일 이야기를 할 때 보통은 과로와 인내를 떠올리지만, 요즘은 조금 다른 공기도 느껴집니다. 겉으로 크게 불만을 말하지는 않지만, 승진이나 과도한 헌신에서 한 발 물러서는 사람들이 늘고 있다는 점입니다. 일본에서는 변화가 늘 천천히 보이기 때문에 이런 흐름은 더 의미가 있습니다. 예전처럼 회사가 삶의 중심이어야 한다는 감각이 약해지고 있고, 사람들은 조용하게 자기 일과 삶의 경계를 다시 그리고 있는 것처럼 보입니다.</textarea>
+                <div>
+                  <button class="copy-button" type="button" data-copy-target="script-0-3">스크립트 복사</button>
+                </div>
+              </div>
+            </section>
+
+            <div class="topic-grid">
+              <section class="block">
+                <span class="label">썸네일 문구</span>
+                <div class="thumbnail-chip">일본의 조용한 퇴사</div>
+              </section>
+
+              <section class="block">
+                <span class="label">브롤</span>
+                <ul><li>아침 출근길 역 인파</li>
+<li>사무실 빌딩 엘리베이터 앞</li>
+<li>노트북을 덮는 손</li>
+<li>퇴근 후 조용한 주택가 골목</li></ul>
+              </section>
+            </div>
+          </div>
+        </article>
+    
+
+        <article class="topic-card">
+          <div class="topic-head">
+            <span class="topic-number">4</span>
+            <div>
+              <h3>일본 소비 트렌드가 &#x27;시간 절약&#x27;에서 &#x27;마음 보호&#x27;로 이동 중이다</h3>
+              <p class="hook">이제는 빠른 것보다 덜 지치는 소비가 더 중요해지고 있습니다.</p>
+            </div>
+          </div>
+
+          <div class="topic-grid two-col">
+            <section class="block">
+              <span class="label">스크립트</span>
+              <div class="script-wrap">
+                <p class="small">클릭해서 바로 선택하거나 복사 버튼으로 가져가면 됩니다.</p>
+                <textarea
+                  class="script-box"
+                  id="script-0-4"
+                  readonly
+                  spellcheck="false"
+                  onclick="this.focus();this.select();"
+                >도쿄 생활을 하다 보면 효율적인 도시라는 말을 자주 떠올리게 되지만, 동시에 꽤 지치는 도시이기도 합니다. 그래서 요즘 일본 소비에서 흥미로운 건, 시간을 아끼는 것보다 마음이 덜 소모되는 경험을 찾는 흐름입니다. 선택지가 너무 많지 않고, 비교 피로가 적고, 들어가면 바로 이해되는 매장이나 서비스가 더 매력적으로 보이는 거죠. 결국 앞으로는 더 빠른 서비스보다 덜 피곤한 서비스가 프리미엄이 될 수도 있다는 얘기인데, 이건 도쿄 같은 도시에서 특히 설득력이 있습니다.</textarea>
+                <div>
+                  <button class="copy-button" type="button" data-copy-target="script-0-4">스크립트 복사</button>
+                </div>
+              </div>
+            </section>
+
+            <div class="topic-grid">
+              <section class="block">
+                <span class="label">썸네일 문구</span>
+                <div class="thumbnail-chip">덜 지치는 소비</div>
+              </section>
+
+              <section class="block">
+                <span class="label">브롤</span>
+                <ul><li>복잡한 진열대와 가격표</li>
+<li>조용한 카페나 서점 내부</li>
+<li>선택 앞에서 멈춘 손</li>
+<li>도쿄 번화가 워킹샷</li></ul>
+              </section>
+            </div>
+          </div>
+        </article>
+    
+
+        <article class="topic-card">
+          <div class="topic-head">
+            <span class="topic-number">5</span>
+            <div>
+              <h3>AI 안경이 일본에 들어오면 가장 먼저 시험대가 되는 곳은 도쿄다</h3>
+              <p class="hook">도쿄는 AI 안경이 정말 유용한지 바로 드러나는 도시입니다.</p>
+            </div>
+          </div>
+
+          <div class="topic-grid two-col">
+            <section class="block">
+              <span class="label">스크립트</span>
+              <div class="script-wrap">
+                <p class="small">클릭해서 바로 선택하거나 복사 버튼으로 가져가면 됩니다.</p>
+                <textarea
+                  class="script-box"
+                  id="script-0-5"
+                  readonly
+                  spellcheck="false"
+                  onclick="this.focus();this.select();"
+                >AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도쿄에서는 꽤 현실적인 도구가 될 수도 있습니다. 이 도시는 간판, 메뉴, 역 안내, 작은 글씨가 끝없이 이어지는 곳이라 시선이 늘 바쁩니다. 그래서 번역이나 정보 보조가 눈앞에서 바로 이뤄진다면, 도쿄에서는 그 효용이 아주 빨리 드러날 수 있습니다. 중요한 건 기술의 화려함보다 일상에 자연스럽게 섞이느냐인데, 그런 의미에서 도쿄는 AI 안경의 가장 정직한 테스트 장소처럼 보입니다.</textarea>
+                <div>
+                  <button class="copy-button" type="button" data-copy-target="script-0-5">스크립트 복사</button>
+                </div>
+              </div>
+            </section>
+
+            <div class="topic-grid">
+              <section class="block">
+                <span class="label">썸네일 문구</span>
+                <div class="thumbnail-chip">도쿄에서 AI 안경</div>
+              </section>
+
+              <section class="block">
+                <span class="label">브롤</span>
+                <ul><li>시부야나 신주쿠 POV 워킹샷</li>
+<li>간판과 메뉴판 클로즈업</li>
+<li>안경을 손에 든 컷</li>
+<li>도심 인파 와이드샷</li></ul>
+              </section>
+            </div>
+          </div>
+        </article>
+    
         </div>
       </section>
-
-      <footer>
-        Keep editorial direction in <code>AGENTS.md</code>. Keep automation simple in <code>scripts/</code>.
-      </footer>
+    
     </main>
+
+    <script>
+      const tabs = Array.from(document.querySelectorAll(".date-tab"));
+      const panels = Array.from(document.querySelectorAll(".day-panel[id]"));
+
+      function activatePanel(targetId) {
+        tabs.forEach((tab) => {
+          tab.classList.toggle("is-active", tab.dataset.target === targetId);
+        });
+        panels.forEach((panel) => {
+          panel.hidden = panel.id !== targetId;
+        });
+        const activePanel = document.getElementById(targetId);
+        if (activePanel) {
+          activePanel.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => activatePanel(tab.dataset.target));
+      });
+
+      async function copyText(text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (error) {
+          const helper = document.createElement("textarea");
+          helper.value = text;
+          document.body.appendChild(helper);
+          helper.select();
+          const copied = document.execCommand("copy");
+          document.body.removeChild(helper);
+          return copied;
+        }
+      }
+
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const field = document.getElementById(button.dataset.copyTarget);
+          if (!field) return;
+          const ok = await copyText(field.value);
+          if (!ok) return;
+          const original = button.textContent;
+          button.textContent = "복사됨";
+          window.setTimeout(() => {
+            button.textContent = original;
+          }, 1200);
+        });
+      });
+
+      document.querySelectorAll("[data-copy-bundle-target]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const field = document.getElementById(button.dataset.copyBundleTarget);
+          if (!field) return;
+          const ok = await copyText(field.value);
+          if (!ok) return;
+          const original = button.textContent;
+          button.textContent = "하루분 복사됨";
+          window.setTimeout(() => {
+            button.textContent = original;
+          }, 1200);
+        });
+      });
+    </script>
   </body>
 </html>

@@ -1,48 +1,61 @@
 # Tokyo Insight
 
-Tokyo Insight is a lightweight content system for planning YouTube Shorts about Tokyo life, Japanese culture, work habits, consumer behavior, and technology from the perspective of a Korean developer living in Tokyo.
+Tokyo Insight는 도쿄에 사는 한국인 크리에이터가 일본 사회를 관찰형 쇼츠로 빠르게 정리하기 위한 로컬 작업 시스템입니다.
 
-`AGENTS.md` is the main instruction file for tone, structure, and production rules.
+기준 문서는 `AGENTS.md`입니다.
 
-## What It Includes
+## 구조
 
-- `data/`: daily structured topic JSON files
-- `posts/`: daily HTML preview pages
-- `scripts/generate_daily_topics.py`: sample generator for daily topics and previews
-- `index.html`: local homepage that links to generated daily posts
+- `AGENTS.md`: 톤과 운영 원칙
+- `data/`: 날짜별 쇼츠 주제 JSON
+- `scripts/generate_daily_topics.py`: 오늘 데이터 생성 및 `index.html` 갱신
+- `index.html`: 날짜 클릭 즉시 전체 주제를 보는 단일 작업 화면
+- `assets/`: 브랜딩 자산
 
-## Generate Daily Topics
+별도 `posts/` 페이지는 사용하지 않습니다.
 
-Run:
+## 사용 방법
 
 ```bash
 python3 scripts/generate_daily_topics.py
 ```
 
-The script will:
+실행하면:
 
-1. Create or update `data/YYYY-MM-DD.json`
-2. Create or update `posts/YYYY-MM-DD.html`
-3. Refresh `index.html` so the new post appears on the homepage
+1. `data/YYYY-MM-DD.json`을 생성하거나 정리합니다.
+2. 모든 날짜 데이터를 읽어서 `index.html` 단일 대시보드를 다시 만듭니다.
 
-The current version uses built-in sample topics only. No external APIs or third-party packages are required.
+그다음 `index.html`을 브라우저에서 열면 됩니다.
 
-## Preview Posts Locally
+## 작업 흐름
 
-1. Run the generator command above.
-2. Open `index.html` in your browser.
-3. Click the daily archive link to view the full post preview page.
+1. 날짜를 클릭합니다.
+2. 주제 제목, 훅, 스크립트, 썸네일 문구, 브롤을 바로 확인합니다.
+3. 스크립트를 개별 복사하거나 하루 분량으로 한 번에 복사합니다.
+4. 바로 CapCut 작업으로 넘어갑니다.
 
-Because everything uses plain HTML with relative links, opening files locally is enough.
+## JSON 형식
 
-## Add Future Automation
+```json
+{
+  "date": "2026-05-29",
+  "topics": [
+    {
+      "title": "도쿄 편의점이 슈퍼마켓처럼 바뀌는 이유",
+      "hook": "도쿄에서는 편의점이 이제 장보는 곳이 되어가고 있습니다.",
+      "script": "30초 내외 내레이션",
+      "thumbnail_text": "편의점이 장보는 곳?",
+      "broll": [
+        "편의점 외관",
+        "진열대 클로즈업"
+      ]
+    }
+  ]
+}
+```
 
-The easiest next extensions are inside `scripts/generate_daily_topics.py`:
+## 다음에 수정할 곳
 
-- Replace `sample_topics()` with topic collection from your own sources
-- Add more fields such as captions, hashtags, or shot lists
-- Split HTML rendering into reusable templates if the previews grow
-- Add a second script for summarizing articles or ranking topic ideas
-
-Keep the output aligned with `AGENTS.md` so the content stays consistent with the channel voice.
-# tokyo_insights
+- 새 날짜용 주제를 자동으로 넣고 싶으면 `sample_topics()`를 바꾸면 됩니다.
+- 주제를 직접 편집하고 싶으면 `data/YYYY-MM-DD.json`만 수정한 뒤 스크립트를 다시 실행하면 됩니다.
+- 디자인은 `scripts/generate_daily_topics.py` 안의 `page_styles()`와 `render_index_html()`에서 함께 관리합니다.

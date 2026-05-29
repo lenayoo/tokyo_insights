@@ -1,61 +1,53 @@
 # Tokyo Insight - AGENTS.md
 
-## Project Overview
+# 프로젝트 개요
 
-Tokyo Insight is a YouTube Shorts content system focused on:
+Tokyo Insight는
+“도쿄에 사는 한국인 개발자의 시선으로 바라보는 일본 사회”
+를 주제로 하는 YouTube Shorts 제작 시스템이다.
 
-* Japanese culture
-* Tokyo lifestyle
-* Japanese work culture
-* Technology trends in Japan
-* AI in Japan
-* Consumer behavior
-* Daily life observations
-* News interpretation from a Tokyo resident perspective
+핵심 방향:
 
-The channel tone should feel:
+* 일본 문화
+* 도쿄 라이프스타일
+* 일본 회사 문화
+* 일본 소비문화
+* 일본 AI/기술
+* 생활 속 작은 문화 차이
+* 외국인 시선의 일본 관찰
 
-* Calm
-* Thoughtful
-* Slightly cinematic
-* Human
-* Observational
-* Never robotic or generic
+톤앤매너:
 
-The perspective is:
-"A Korean developer living in Tokyo observing Japanese society from the inside."
-
----
-
-# Goals
-
-The system should help generate:
-
-* Daily Shorts ideas
-* Scripts
-* Hooks
-* Captions
-* B-roll suggestions
-* HTML preview pages
-* Topic archives
-
-The workflow should optimize for:
-
-* Speed
-* Consistency
-* Repeatable production
-* Shorts-friendly pacing
-* High curiosity hooks
-
-The target production speed is:
-3-5 Shorts per day within 2 hours.
+* 인간적
+* 관찰형
+* 조용한 몰입감
+* 너무 뉴스 같지 않게
+* 너무 AI 같지 않게
+* B급 감성 가능
+* “실제로 도쿄 사는 사람이 느끼는 감각”
 
 ---
 
-# Project Structure
+# 목표
+
+목표는:
+“빠르게 Shorts를 반복 생산하는 시스템”
+
+최우선:
+
+* 빠른 제작
+* 반복 가능한 구조
+* 하루 3~5개 생산 가능
+* 한국어 기반
+* 바로 영상 제작 가능한 구조
+
+---
+
+# 프로젝트 구조
 
 ```txt
 tokyo-insight/
+
   AGENTS.md
   README.md
   index.html
@@ -63,39 +55,61 @@ tokyo-insight/
   data/
     2026-05-29.json
 
-  posts/
-    2026-05-29.html
-
   scripts/
     generate_daily_topics.py
 
   assets/
-    logo.png
+    appIcon.png
 ```
 
 ---
 
-# Folder Rules
+# 가장 중요한 UI 구조
 
-## /data
+절대:
 
-Store structured JSON topic data.
+* 클릭 → 클릭 → 또 클릭 구조 금지
 
-Example:
+반드시:
+
+첫 페이지(index.html)에서
+날짜를 클릭하면 바로 아래에:
+
+* 한국어 토픽
+* 제목
+* 후킹 문장
+* 스크립트
+* 썸네일 문구
+* B-roll
+
+이 한 번에 보여야 한다.
+
+즉:
+“날짜 기반 숏츠 대시보드”
+
+형태로 제작.
+
+---
+
+# 데이터 규칙
+
+모든 데이터는 반드시 한국어로 생성.
+
+예시:
 
 ```json
 {
   "date": "2026-05-29",
   "topics": [
     {
-      "title": "Why Japan Still Uses Cash",
-      "hook": "Japan is surprisingly cash-heavy.",
+      "title": "일본은 왜 아직도 현금을 많이 쓸까?",
+      "hook": "도쿄 살면서 놀란 것 중 하나.",
       "script": "...",
-      "thumbnail": "Japan still loves cash",
+      "thumbnail_text": "일본은 아직 현금사회",
       "broll": [
-        "Convenience store payment",
-        "Tokyo train station",
-        "Cash register"
+        "편의점 계산",
+        "도쿄 거리",
+        "지하철 개찰구"
       ]
     }
   ]
@@ -104,218 +118,130 @@ Example:
 
 ---
 
-## /posts
+# 반드시 생성해야 하는 요소
 
-Generate HTML preview pages for daily content.
+각 토픽마다:
 
-Each HTML page should contain:
+1. 제목
+2. 썸네일 문구
+3. 2초 후킹 문장
+4. 30초 쇼츠 스크립트
+5. 추천 B-roll
 
-* Topic list
-* Script preview
-* Thumbnail text
-* Suggested B-roll
-* Production notes
-* Source links
+만 생성.
 
-The HTML should:
+아래 요소는 제거:
 
-* Be clean
-* Minimal
-* Mobile-friendly
-* Easy to skim quickly
-
----
-
-## /scripts
-
-Contains automation scripts.
-
-Example:
-
-* generate_daily_topics.py
-* generate_html_preview.py
-* summarize_news.py
+* production notes
+* difficulty
+* copyright analysis
+* unnecessary metadata
 
 ---
 
-## /assets
+# 쇼츠 스크립트 스타일
 
-Contains:
+좋은 예시:
 
-* Logos
-* Icons
-* Branding assets
-* Thumbnail templates
+"도쿄 살면서 의외였던 게 하나 있는데요."
 
----
+"일본 회사에서는 아직도 이 문화가 남아있습니다."
 
-# Content Generation Rules
+"한국인이 일본 와서 가장 놀라는 순간."
 
-For every topic generated:
+나쁜 예시:
 
-Provide:
-
-1. Viral title
-2. Thumbnail text
-3. 2-second hook
-4. 30-second narration script
-5. Suggested B-roll footage
-6. Editing suggestions
-7. Estimated production difficulty
-8. Copyright safety notes
+"충격!! 일본에서 일어나고 있는 믿을 수 없는 일!!"
 
 ---
 
-# Tone Rules
+# 쇼츠 구조
 
-The scripts should:
+0~2초:
+강한 호기심
 
-* Feel natural
-* Avoid exaggerated AI writing
-* Avoid clickbait spam
-* Feel like a real person talking
-* Be emotionally engaging
-* Use curiosity-driven openings
+3~15초:
+설명
 
-Good:
-"Living in Japan, this surprised me."
+15~25초:
+흥미 포인트
 
-Bad:
-"You WON'T BELIEVE what happened in Japan!!!"
+25~35초:
+짧은 마무리
 
 ---
 
-# Copyright & Content Safety Rules
+# 메인 카테고리
 
-DO NOT:
-
-* Re-upload copyrighted news videos directly
-* Copy articles word-for-word
-* Reuse TV clips extensively
-
-ALWAYS:
-
-* Add commentary
-* Transform content
-* Use short reference clips only when necessary
-* Prefer royalty-free B-roll
-* Prefer original observations
-
-Preferred sources:
-
-* Pexels
-* Pixabay
-* Personal Tokyo footage
-* Screenshots with commentary
-* Public articles
+1. 도쿄 라이프스타일
+2. 일본 직장 문화
+3. 일본 소비문화
+4. 일본 AI/기술
+5. 일본 일상 관찰
+6. 편의점 문화
+7. 조용한 문화 차이
+8. 한국인이 느끼는 일본
 
 ---
 
-# Shorts Structure
+# 제작 철학
 
-Recommended structure:
+완벽주의 금지.
 
-0-2 seconds:
-Strong curiosity hook
+중요한 건:
 
-3-15 seconds:
-Context + explanation
-
-15-25 seconds:
-Insight or emotional point
-
-25-35 seconds:
-Closing thought
-
----
-
-# Content Categories
-
-Main categories:
-
-1. Tokyo Lifestyle
-2. Japanese Work Culture
-3. Japanese Consumer Trends
-4. AI & Technology in Japan
-5. Tokyo Daily Observations
-6. Japanese Social Behavior
-7. Convenience Store Culture
-8. Quiet Cultural Differences
-
----
-
-# Production Philosophy
-
-This is NOT a traditional news channel.
-
-This is:
-"Tokyo observations from someone living inside the system."
-
-The content should feel:
-
-* Personal
-* Reflective
-* Efficient to produce
-* Sustainable long-term
+* 반복
+* 속도
+* 실험
+* 감각 유지
+* 지속 가능성
 
 ---
 
 # Daily Workflow
 
-1. Collect topics
-2. Select top 3-5
-3. Generate scripts
-4. Generate HTML preview
-5. Review locally
-6. Produce Shorts in CapCut
-7. Upload to YouTube
+1. 일본 뉴스/트렌드 수집
+2. 흥미로운 토픽 선택
+3. 한국어 쇼츠 스크립트 생성
+4. index.html 단일 대시보드 생성
+5. 첫 페이지에서 바로 확인
+6. CapCut 제작
+7. YouTube 업로드
 
 ---
 
-# HTML Preview Requirements
+# 토픽 수집 규칙
 
-The generated HTML should:
+매일 확인:
 
-* Show all topics cleanly
-* Include thumbnail previews
-* Be visually minimal
-* Use soft Tokyo-inspired aesthetics
-* Support quick scanning
+* Yahoo Japan
+* ITmedia
+* Nikkei Trend
+* 일본 SNS 트렌드
+
+선정 기준:
+
+* 30초 안에 설명 가능
+* 호기심 유발
+* 시각화 쉬움
+* 도쿄 생활과 연결 가능
+* 인간적인 관찰 느낌
+
+피해야 할 것:
+
+* 무거운 정치
+* 복잡한 경제분석
+* 의미없는 연예인 가십
+* 조사 너무 오래 필요한 주제
 
 ---
 
-# Important Philosophy
+# 가장 중요한 철학
 
-Do not optimize for perfection.
+“뉴스 채널”이 아니라:
 
-Optimize for:
+도쿄 안에서 살아가는 사람이 기록하는
+짧은 관찰 다큐 느낌.
 
-* consistency
-* repetition
-* sustainable production
-* emotional resonance
-* fast experimentation
-
-# Daily Topic Collection Rules
-
-Every morning:
-1. Check Yahoo Japan News
-2. Check ITmedia
-3. Check Nikkei Trend
-4. Check trending Japanese social topics
-
-Select topics that:
-- can be explained in under 30 seconds
-- trigger curiosity
-- relate to modern Japanese life
-- feel emotionally interesting
-- are easy to visualize with B-roll
-
-Avoid:
-- overly political topics
-- complex financial analysis
-- celebrity gossip without insight
-- topics that require heavy research
-
-The perspective should always be:
-"Interesting observations from daily life in Japan."
+그리고:
+완벽보다 반복.
