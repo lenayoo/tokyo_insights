@@ -22,34 +22,38 @@
       --sans: "Hiragino Sans", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
     }
     * { box-sizing: border-box; }
-    html { background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.6; scroll-behavior: smooth; }
-    body { margin: 0; min-height: 100vh; }
+    html { background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.6; scroll-behavior: smooth; text-size-adjust: 100%; }
+    body { margin: 0; min-height: 100vh; overflow-x: hidden; }
     button, textarea { font: inherit; }
-    .shell { width: min(calc(100% - 24px), var(--max)); margin: 0 auto; padding: 20px 0 48px; }
+    .shell { width: min(calc(100% - 24px), var(--max)); margin: 0 auto; padding: calc(20px + env(safe-area-inset-top)) 0 calc(48px + env(safe-area-inset-bottom)); }
     .topbar, .date-rail, .day-panel, .topic-card, .block { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
     .topbar { padding: 22px; margin-bottom: 14px; }
     .eyebrow { margin: 0 0 8px; color: var(--accent); font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
     h1, h2, h3 { margin: 0; line-height: 1.24; letter-spacing: 0; }
-    h1 { font-size: clamp(1.8rem, 5vw, 3.2rem); margin-bottom: 10px; }
-    h2 { font-size: clamp(1.3rem, 3vw, 1.9rem); }
+    h1 { font-size: 2.8rem; margin-bottom: 10px; }
+    h2 { font-size: 1.8rem; }
     h3 { font-size: 1.08rem; }
     p { margin: 0; }
-    a { color: inherit; }
+    a { color: inherit; overflow-wrap: anywhere; }
     .lead, .small, .day-meta, .source-line { color: var(--muted); }
     .lead { max-width: 66ch; }
     .date-rail { position: sticky; top: 10px; z-index: 5; padding: 12px; margin-bottom: 14px; }
-    .date-scroll, .day-actions, .script-toolbar, .source-list { display: flex; gap: 8px; flex-wrap: wrap; }
-    .date-tab, .ghost-button, .tool-button, .copy-button { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; background: var(--paper-strong); color: var(--ink); cursor: pointer; text-decoration: none; }
+    .date-scroll { display: flex; gap: 8px; overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 2px; scrollbar-width: none; }
+    .date-scroll::-webkit-scrollbar { display: none; }
+    .day-actions, .script-toolbar, .source-list { display: flex; gap: 8px; flex-wrap: wrap; }
+    .date-tab, .ghost-button, .tool-button, .copy-button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; background: var(--paper-strong); color: var(--ink); cursor: pointer; text-decoration: none; -webkit-tap-highlight-color: transparent; }
     .date-tab { flex-direction: column; align-items: flex-start; min-width: 102px; }
     .date-tab.is-active, .copy-button { background: var(--accent-soft); border-color: rgba(192, 79, 54, .24); color: var(--accent); }
     .date-tab span { font-size: .78rem; color: var(--muted); }
     .day-panel { padding: 20px; }
     .day-panel[hidden] { display: none; }
     .day-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 16px; }
+    .day-header > div:first-child { min-width: 0; }
     .topic-list { display: grid; gap: 14px; }
     .topic-card { padding: 18px; }
-    .topic-head { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+    .topic-head { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; min-width: 0; }
     .topic-number { flex: 0 0 auto; width: 32px; height: 32px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+    .topic-head > div { min-width: 0; }
     .hook { margin-top: 10px; padding: 12px 14px; border-left: 3px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; background: var(--accent-soft); }
     .topic-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 14px; }
     .block { padding: 14px; box-shadow: none; background: rgba(255, 255, 255, .66); }
@@ -63,7 +67,36 @@
     li + li { margin-top: 6px; }
     .empty { padding: 28px; text-align: center; color: var(--muted); }
     @media (min-width: 760px) { .topic-grid.two-col { grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr); } }
-    @media (max-width: 640px) { .shell { width: min(calc(100% - 16px), var(--max)); padding-top: 14px; } .topbar, .date-rail, .day-panel, .topic-card { padding: 16px; } }
+    @media (max-width: 760px) {
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.42rem; }
+      .shell { width: min(calc(100% - 16px), var(--max)); padding-top: calc(10px + env(safe-area-inset-top)); }
+      .topbar, .date-rail, .day-panel, .topic-card { padding: 14px; }
+      .topbar { margin-bottom: 10px; }
+      .lead { font-size: .95rem; }
+      .date-rail { top: 0; margin-left: -8px; margin-right: -8px; border-radius: 0; border-left: 0; border-right: 0; }
+      .date-tab { min-width: 84px; padding: 8px 12px; }
+      .day-header { display: grid; align-items: stretch; }
+      .day-actions, .script-toolbar { display: grid; grid-template-columns: 1fr 1fr; }
+      .script-toolbar .copy-button { grid-column: 1 / -1; }
+      .ghost-button, .tool-button, .copy-button { width: 100%; padding-left: 10px; padding-right: 10px; }
+      .topic-card { box-shadow: 0 8px 22px rgba(35, 31, 28, .07); }
+      .topic-head { gap: 10px; }
+      .topic-number { width: 28px; height: 28px; font-size: .88rem; }
+      .hook { padding: 10px 12px; }
+      .block { padding: 12px; }
+      .script-box { min-height: 190px; font-size: 1rem; }
+    }
+    @media (max-width: 420px) {
+      h1 { font-size: 1.72rem; }
+      h2 { font-size: 1.24rem; }
+      h3 { font-size: 1rem; }
+      .day-actions, .script-toolbar { grid-template-columns: 1fr; }
+      .script-toolbar .copy-button { grid-column: auto; }
+      .badge { width: 100%; justify-content: center; margin-bottom: 6px; }
+      .thumbnail-chip { max-width: 100%; white-space: normal; }
+      .topic-grid { gap: 10px; margin-top: 10px; }
+    }
     </style>
   </head>
   <body>
@@ -88,28 +121,28 @@
             <a class="ghost-button" href="posts/2026-06-01.html">상세 미리보기</a>
           </div>
         </div>
-        <textarea id="bundle-0" hidden>1. 돈키호테가 지역 한정 캐릭터로 소비자를 붙잡는 방식
+        <textarea id="bundle-0" hidden>1. 오피스 업무 안으로 AI 비서가 들어오는 방식
+도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 Impress Watch에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 AI/기술의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.
+
+2. 도쿄 본사 집중이 조금씩 흔들리는 흐름
 도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia Business에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 도쿄 라이프스타일의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.
 
-2. 도쿄 생활의 기준이 조금씩 바뀌는 흐름
-도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 Impress Watch에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 도쿄 라이프스타일의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.
-
-3. 일본 회사 문화가 천천히 재조정되는 흐름
-도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia NEWS에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 직장 문화의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.
+3. 일본 이자카야가 버티기 어려워지는 배경
+도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia Business에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 도쿄 라이프스타일의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.
 
 4. 일본 기술이 일상 업무 안으로 조용히 들어오는 흐름
 도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia NEWS에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 AI/기술의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.
 
-5. 가격 변화가 일본인의 일상 선택을 바꾸는 흐름
-도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia Business에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 편의점 문화의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
+5. 스마트폰 서비스가 일본 생활 동선을 바꾸는 흐름
+도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia NEWS에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 AI/기술의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
         <div class="topic-list">
         <article class="topic-card">
           <div class="topic-head">
             <span class="topic-number">1</span>
             <div>
-              <h3>돈키호테가 지역 한정 캐릭터로 소비자를 붙잡는 방식</h3>
-              <p class="source-line">ITmedia Business · <a href="https://www.itmedia.co.jp/business/articles/2605/30/news009.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
-              <p class="hook">도쿄 생활에서 이런 작은 변화가 은근히 크게 느껴집니다.</p>
+              <h3>오피스 업무 안으로 AI 비서가 들어오는 방식</h3>
+              <p class="source-line">Impress Watch · <a href="https://www.watch.impress.co.jp/docs/news/2112852.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
+              <p class="hook">일본의 기술 변화는 생각보다 조용한 곳에서 먼저 보입니다.</p>
             </div>
           </div>
           <div class="topic-grid two-col">
@@ -118,23 +151,23 @@
               <div class="script-wrap">
                 <div class="script-toolbar">
                   <button class="tool-button" type="button" data-focus-target="script-0-1">스크립트 보기</button>
-                  <a class="tool-button" href="https://www.itmedia.co.jp/business/articles/2605/30/news009.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <a class="tool-button" href="https://www.watch.impress.co.jp/docs/news/2112852.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-0-1">복사</button>
                 </div>
-                <textarea class="script-box" id="script-0-1" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia Business에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 도쿄 라이프스타일의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
+                <textarea class="script-box" id="script-0-1" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 Impress Watch에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 AI/기술의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
               <section class="block">
                 <span class="label">썸네일 문구</span>
-                <div class="thumbnail-chip">도쿄 생활의 신호</div>
+                <div class="thumbnail-chip">일본 AI는 조용하다</div>
               </section>
               <section class="block">
                 <span class="label">브롤</span>
-                <ul><li>도쿄 역 앞 거리</li>
-<li>전철 개찰구</li>
-<li>주택가 골목</li>
-<li>신호등 앞 사람들</li></ul>
+                <ul><li>노트북 타이핑 클로즈업</li>
+<li>도쿄 오피스 빌딩</li>
+<li>스마트폰 화면 손동작</li>
+<li>역 안 디지털 광고판</li></ul>
               </section>
               
             </div>
@@ -146,8 +179,8 @@
           <div class="topic-head">
             <span class="topic-number">2</span>
             <div>
-              <h3>도쿄 생활의 기준이 조금씩 바뀌는 흐름</h3>
-              <p class="source-line">Impress Watch · <a href="https://www.watch.impress.co.jp/docs/news/2113030.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
+              <h3>도쿄 본사 집중이 조금씩 흔들리는 흐름</h3>
+              <p class="source-line">ITmedia Business · <a href="https://www.itmedia.co.jp/business/articles/2605/30/news004.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
               <p class="hook">도쿄 생활에서 이런 작은 변화가 은근히 크게 느껴집니다.</p>
             </div>
           </div>
@@ -157,10 +190,10 @@
               <div class="script-wrap">
                 <div class="script-toolbar">
                   <button class="tool-button" type="button" data-focus-target="script-0-2">스크립트 보기</button>
-                  <a class="tool-button" href="https://www.watch.impress.co.jp/docs/news/2113030.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <a class="tool-button" href="https://www.itmedia.co.jp/business/articles/2605/30/news004.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-0-2">복사</button>
                 </div>
-                <textarea class="script-box" id="script-0-2" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 Impress Watch에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 도쿄 라이프스타일의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
+                <textarea class="script-box" id="script-0-2" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia Business에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 도쿄 라이프스타일의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
@@ -185,9 +218,9 @@
           <div class="topic-head">
             <span class="topic-number">3</span>
             <div>
-              <h3>일본 회사 문화가 천천히 재조정되는 흐름</h3>
-              <p class="source-line">ITmedia NEWS · <a href="https://www.itmedia.co.jp/news/articles/2605/28/news150.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
-              <p class="hook">일본 회사 문화도 아주 천천히 달라지고 있습니다.</p>
+              <h3>일본 이자카야가 버티기 어려워지는 배경</h3>
+              <p class="source-line">ITmedia Business · <a href="https://www.itmedia.co.jp/business/articles/2605/30/news020.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
+              <p class="hook">도쿄 생활에서 이런 작은 변화가 은근히 크게 느껴집니다.</p>
             </div>
           </div>
           <div class="topic-grid two-col">
@@ -196,23 +229,23 @@
               <div class="script-wrap">
                 <div class="script-toolbar">
                   <button class="tool-button" type="button" data-focus-target="script-0-3">스크립트 보기</button>
-                  <a class="tool-button" href="https://www.itmedia.co.jp/news/articles/2605/28/news150.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <a class="tool-button" href="https://www.itmedia.co.jp/business/articles/2605/30/news020.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-0-3">복사</button>
                 </div>
-                <textarea class="script-box" id="script-0-3" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia NEWS에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 직장 문화의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
+                <textarea class="script-box" id="script-0-3" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia Business에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 도쿄 라이프스타일의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
               <section class="block">
                 <span class="label">썸네일 문구</span>
-                <div class="thumbnail-chip">일본 회사의 변화</div>
+                <div class="thumbnail-chip">도쿄 생활의 신호</div>
               </section>
               <section class="block">
                 <span class="label">브롤</span>
-                <ul><li>아침 출근길 역 인파</li>
-<li>사무실 빌딩 입구</li>
-<li>회의실 문패</li>
-<li>노트북을 덮는 손</li></ul>
+                <ul><li>도쿄 역 앞 거리</li>
+<li>전철 개찰구</li>
+<li>주택가 골목</li>
+<li>신호등 앞 사람들</li></ul>
               </section>
               
             </div>
@@ -225,7 +258,7 @@
             <span class="topic-number">4</span>
             <div>
               <h3>일본 기술이 일상 업무 안으로 조용히 들어오는 흐름</h3>
-              <p class="source-line">ITmedia NEWS · <a href="https://www.itmedia.co.jp/news/articles/2605/28/news144.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
+              <p class="source-line">ITmedia NEWS · <a href="https://www.itmedia.co.jp/news/articles/2605/29/news059.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
               <p class="hook">일본의 기술 변화는 생각보다 조용한 곳에서 먼저 보입니다.</p>
             </div>
           </div>
@@ -235,7 +268,7 @@
               <div class="script-wrap">
                 <div class="script-toolbar">
                   <button class="tool-button" type="button" data-focus-target="script-0-4">스크립트 보기</button>
-                  <a class="tool-button" href="https://www.itmedia.co.jp/news/articles/2605/28/news144.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <a class="tool-button" href="https://www.itmedia.co.jp/news/articles/2605/29/news059.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-0-4">복사</button>
                 </div>
                 <textarea class="script-box" id="script-0-4" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia NEWS에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 AI/기술의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
@@ -263,9 +296,9 @@
           <div class="topic-head">
             <span class="topic-number">5</span>
             <div>
-              <h3>가격 변화가 일본인의 일상 선택을 바꾸는 흐름</h3>
-              <p class="source-line">ITmedia Business · <a href="https://www.itmedia.co.jp/business/articles/2606/01/news034.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
-              <p class="hook">도쿄 살면서 편의점 변화를 보면 생활 리듬이 보입니다.</p>
+              <h3>스마트폰 서비스가 일본 생활 동선을 바꾸는 흐름</h3>
+              <p class="source-line">ITmedia NEWS · <a href="https://www.itmedia.co.jp/news/articles/2605/29/news081.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
+              <p class="hook">일본의 기술 변화는 생각보다 조용한 곳에서 먼저 보입니다.</p>
             </div>
           </div>
           <div class="topic-grid two-col">
@@ -274,23 +307,23 @@
               <div class="script-wrap">
                 <div class="script-toolbar">
                   <button class="tool-button" type="button" data-focus-target="script-0-5">스크립트 보기</button>
-                  <a class="tool-button" href="https://www.itmedia.co.jp/business/articles/2606/01/news034.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <a class="tool-button" href="https://www.itmedia.co.jp/news/articles/2605/29/news081.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-0-5">복사</button>
                 </div>
-                <textarea class="script-box" id="script-0-5" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia Business에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 편의점 문화의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
+                <textarea class="script-box" id="script-0-5" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia NEWS에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 AI/기술의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
               <section class="block">
                 <span class="label">썸네일 문구</span>
-                <div class="thumbnail-chip">편의점이 바뀌는 중</div>
+                <div class="thumbnail-chip">일본 AI는 조용하다</div>
               </section>
               <section class="block">
                 <span class="label">브롤</span>
-                <ul><li>편의점 외관</li>
-<li>계산대 손 클로즈업</li>
-<li>도시락 진열대</li>
-<li>퇴근길 골목 워킹샷</li></ul>
+                <ul><li>노트북 타이핑 클로즈업</li>
+<li>도쿄 오피스 빌딩</li>
+<li>스마트폰 화면 손동작</li>
+<li>역 안 디지털 광고판</li></ul>
               </section>
               
             </div>

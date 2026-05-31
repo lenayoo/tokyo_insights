@@ -10,9 +10,8 @@ Tokyo Insight는 도쿄에 사는 한국인 크리에이터가 일본 사회를 
 - `data/`: 날짜별 쇼츠 주제 JSON
 - `scripts/generate_daily_topics.py`: 오늘 데이터 생성 및 `index.html` 갱신
 - `index.html`: 날짜 클릭 즉시 전체 주제를 보는 단일 작업 화면
+- `posts/`: 날짜별 상세 미리보기 HTML
 - `assets/`: 브랜딩 자산
-
-별도 `posts/` 페이지는 사용하지 않습니다.
 
 ## 사용 방법
 
@@ -22,10 +21,23 @@ python3 scripts/generate_daily_topics.py
 
 실행하면:
 
-1. `data/YYYY-MM-DD.json`을 생성하거나 정리합니다.
-2. 모든 날짜 데이터를 읽어서 `index.html` 단일 대시보드를 다시 만듭니다.
+1. 오늘 날짜로 일본 기사/트렌드를 수집합니다.
+2. `data/YYYY-MM-DD.json`을 생성합니다.
+3. `posts/YYYY-MM-DD.html` 상세 미리보기를 생성합니다.
+4. 모든 날짜 데이터를 읽어서 `index.html` 단일 대시보드를 다시 만듭니다.
 
 그다음 `index.html`을 브라우저에서 열면 됩니다.
+
+## 모바일 확인
+
+`index.html`과 `posts/YYYY-MM-DD.html`은 정적 파일이라 GitHub Pages, Netlify, Vercel 같은 정적 호스팅에 그대로 올릴 수 있습니다.
+
+모바일에서는:
+
+- 날짜 탭을 좌우로 스와이프합니다.
+- 카드 안에서 `스크립트 보기`, `기사 보기`, `복사`를 바로 누릅니다.
+- 버튼은 손가락 터치 기준으로 크게 잡혀 있습니다.
+- 긴 기사 URL과 스크립트는 화면 밖으로 밀리지 않게 줄바꿈됩니다.
 
 ## 작업 흐름
 
@@ -57,6 +69,6 @@ python3 scripts/generate_daily_topics.py
 
 ## 다음에 수정할 곳
 
-- 새 날짜용 주제를 자동으로 넣고 싶으면 `sample_topics()`를 바꾸면 됩니다.
+- 새 날짜용 fallback 주제를 바꾸고 싶으면 `sample_topics()`를 수정하면 됩니다.
 - 주제를 직접 편집하고 싶으면 `data/YYYY-MM-DD.json`만 수정한 뒤 스크립트를 다시 실행하면 됩니다.
 - 디자인은 `scripts/generate_daily_topics.py` 안의 `page_styles()`와 `render_index_html()`에서 함께 관리합니다.
