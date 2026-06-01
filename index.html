@@ -26,7 +26,7 @@
     body { margin: 0; min-height: 100vh; overflow-x: hidden; }
     button, textarea { font: inherit; }
     .shell { width: min(calc(100% - 24px), var(--max)); margin: 0 auto; padding: calc(20px + env(safe-area-inset-top)) 0 calc(48px + env(safe-area-inset-bottom)); }
-    .topbar, .date-rail, .day-panel, .topic-card, .block { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .topbar, .date-rail, .day-panel, .topic-card, .block { min-width: 0; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
     .topbar { padding: 22px; margin-bottom: 14px; }
     .eyebrow { margin: 0 0 8px; color: var(--accent); font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
     h1, h2, h3 { margin: 0; line-height: 1.24; letter-spacing: 0; }
@@ -36,6 +36,7 @@
     p { margin: 0; }
     a { color: inherit; overflow-wrap: anywhere; }
     .lead, .small, .day-meta, .source-line { color: var(--muted); }
+    .source-line, .url-list a, li, p { overflow-wrap: anywhere; word-break: keep-all; }
     .lead { max-width: 66ch; }
     .date-rail { position: sticky; top: 10px; z-index: 5; padding: 12px; margin-bottom: 14px; }
     .date-scroll { display: flex; gap: 8px; overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 2px; scrollbar-width: none; }
@@ -62,9 +63,13 @@
     .badge.live { color: var(--good); background: rgba(40, 116, 91, .12); }
     .badge.fallback { color: var(--warn); background: rgba(155, 90, 23, .13); }
     .script-wrap { display: grid; gap: 10px; }
-    .script-box { width: 100%; min-height: 150px; resize: vertical; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, .9); color: var(--ink); line-height: 1.65; }
+    .script-box { width: 100%; min-height: 150px; resize: none; overflow: hidden; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, .9); color: var(--ink); line-height: 1.65; }
     ul { margin: 0; padding-left: 18px; }
     li + li { margin-top: 6px; }
+    .url-list { list-style: none; padding-left: 0; display: grid; gap: 10px; }
+    .url-list li { margin: 0; }
+    .url-list strong { display: block; color: var(--ink); }
+    .url-list a { display: block; color: var(--muted); word-break: break-all; text-decoration-thickness: .08em; text-underline-offset: .18em; }
     .empty { padding: 28px; text-align: center; color: var(--muted); }
     @media (min-width: 760px) { .topic-grid.two-col { grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr); } }
     @media (max-width: 760px) {
@@ -104,7 +109,7 @@
       <header class="topbar">
         <p class="eyebrow">Tokyo Insight</p>
         <h1>도쿄에 사는 한국인 크리에이터의 숏츠 작업 보드</h1>
-        <p class="lead">날짜를 누르면 바로 훅, 스크립트, 썸네일 문구, 브롤이 펼쳐집니다. 뉴스보다 관찰에 가깝고, 완성도보다 반복 가능한 생산 속도에 맞췄습니다.</p>
+        <p class="lead">날짜를 누르면 바로 훅, 스크립트, 썸네일 문구, 촬영 컷이 펼쳐집니다. 뉴스보다 관찰에 가깝고, 완성도보다 반복 가능한 생산 속도에 맞췄습니다.</p>
       </header>
       <section class="date-rail"><div class="date-scroll"><button class="date-tab is-active" type="button" data-target="day-2026-06-01"><strong>06.01</strong><span>5개 주제</span></button>
 <button class="date-tab" type="button" data-target="day-2026-05-29"><strong>05.29</strong><span>5개 주제</span></button></div></section>
@@ -121,28 +126,28 @@
             <a class="ghost-button" href="posts/2026-06-01.html">상세 미리보기</a>
           </div>
         </div>
-        <textarea id="bundle-0" hidden>1. 오피스 업무 안으로 AI 비서가 들어오는 방식
-도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 Impress Watch에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 AI/기술의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.
+        <textarea id="bundle-0" hidden>1. 일본 결제가 현금보다 부드러운 경험 중심으로 바뀌는 흐름
+도쿄에서 살다 보면 뉴스보다 먼저 거리에서 느껴지는 변화가 있습니다. ITmedia Business 기사에서 제가 잡은 포인트는 일본 결제가 현금보다 부드러운 경험 중심으로 바뀌는 흐름입니다. 핵심은 큰 발표 문구가 아니라, 매일 지나가는 순간의 감각입니다. 결제 수단의 기준이 &#x27;무엇으로 내느냐&#x27;보다 얼마나 막힘 없이 지나가느냐로 옮겨가고 있습니다. 특히 캐시리스 이용률 92%라는 단서가 이 변화를 꽤 선명하게 보여줍니다. 영상은 편의점 계산대, 터치 결제 단말기, 지갑 대신 스마트폰을 꺼내는 손을 짧게 이어 붙이면 좋습니다. 한 줄로 정리하면, 일본 결제가 현금보다 부드러운 경험 중심으로 바뀌는 흐름은 큰 뉴스보다 도쿄의 평범한 생활 장면에서 먼저 체감되는 변화입니다.
 
-2. 도쿄 본사 집중이 조금씩 흔들리는 흐름
-도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia Business에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 도쿄 라이프스타일의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.
+2. 구글이 오모테산도에 일본 첫 직영점을 여는 흐름
+이 기사는 숫자나 발표보다, 생활 동선이 바뀌는 장면으로 보는 게 더 재밌습니다. 이번 Impress Watch 기사에서 중요한 건 제목보다 그 뒤의 생활 장면입니다. 구글이 오모테산도에 일본 첫 직영점을 여는 흐름은 갑자기 세상이 바뀐다는 얘기라기보다, 사람들이 덜 귀찮은 쪽으로 움직인다는 신호에 가깝습니다. 오모테산도 같은 장소에 체험형 매장이 생긴다는 건 기술이 온라인 서비스에서 거리의 경험으로 내려오는 장면입니다. 그래서 포인트는 미국 밖 첫 직영점이 도쿄 오모테산도에 생긴다는 단서입니다. 촬영은 오모테산도 거리, 스마트폰 매장 외관, 제품을 만져보는 손 중심으로 잡으면 기사 설명보다 관찰 느낌이 살아납니다.
 
-3. 일본 이자카야가 버티기 어려워지는 배경
-도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia Business에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 도쿄 라이프스타일의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.
+3. 편의점 ATM까지 브랜드 경험으로 바뀌는 흐름
+일본 뉴스 중에는 작아 보여도 실제 생활감이 꽤 강한 것들이 있습니다. 저는 이걸 편의점 문화 뉴스라기보다 도쿄 생활 리듬의 변화로 봤습니다. Impress Watch가 다룬 단서는 편의점 안 ATM까지 브랜드 색으로 바뀐다는 단서이고, 여기서 보이는 흐름은 편의점 ATM까지 브랜드 경험으로 바뀌는 흐름입니다. 도시 생활에서 가까운 가게 하나가 식사, 결제, 택배, 장보기까지 떠안는 장면이 늘고 있습니다. 겉으로는 사소해 보여도, 이런 변화는 편의점이나 역, 매장 같은 장소에서 먼저 체감됩니다. 마지막에는 이렇게 정리하면 됩니다. 편의점 ATM까지 브랜드 경험으로 바뀌는 흐름은 큰 뉴스보다 도쿄의 평범한 생활 장면에서 먼저 체감되는 변화입니다.
 
-4. 일본 기술이 일상 업무 안으로 조용히 들어오는 흐름
-도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia NEWS에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 AI/기술의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.
+4. 편의점이 생활 인프라처럼 넓어지는 흐름
+겉으로는 기업 소식처럼 보이지만, 도쿄 생활자 입장에서는 다른 포인트가 보입니다. ITmedia Business 기사에서 제가 잡은 포인트는 편의점이 생활 인프라처럼 넓어지는 흐름입니다. 핵심은 큰 발표 문구가 아니라, 매일 지나가는 순간의 감각입니다. 도시 생활에서 가까운 가게 하나가 식사, 결제, 택배, 장보기까지 떠안는 장면이 늘고 있습니다. 특히 제목 뒤에 붙은 생활 현장의 맥락이라는 단서가 이 변화를 꽤 선명하게 보여줍니다. 영상은 편의점 도시락 진열대와 계산대 앞 손동작을 짧게 이어 붙이면 좋습니다. 한 줄로 정리하면, 편의점이 생활 인프라처럼 넓어지는 흐름은 큰 뉴스보다 도쿄의 평범한 생활 장면에서 먼저 체감되는 변화입니다.
 
-5. 스마트폰 서비스가 일본 생활 동선을 바꾸는 흐름
-도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia NEWS에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 AI/기술의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
+5. 일본 회사 문화가 천천히 재조정되는 흐름
+한국에서 보면 그냥 일본 뉴스인데, 여기서 살면 조금 다르게 읽히는 장면이 있습니다. 이번 PR TIMES 기사에서 중요한 건 제목보다 그 뒤의 생활 장면입니다. 일본 회사 문화가 천천히 재조정되는 흐름은 갑자기 세상이 바뀐다는 얘기라기보다, 사람들이 덜 귀찮은 쪽으로 움직인다는 신호에 가깝습니다. 겉으로는 큰 변화가 없어 보여도 출근, 문서, 회의 방식이 조금씩 다시 정리되고 있습니다. 그래서 포인트는 제목 뒤에 붙은 생활 현장의 맥락이라는 단서입니다. 촬영은 출근길 개찰구와 회의실 앞의 조용한 움직임 중심으로 잡으면 기사 설명보다 관찰 느낌이 살아납니다.</textarea>
         <div class="topic-list">
         <article class="topic-card">
           <div class="topic-head">
             <span class="topic-number">1</span>
             <div>
-              <h3>오피스 업무 안으로 AI 비서가 들어오는 방식</h3>
-              <p class="source-line">Impress Watch · <a href="https://www.watch.impress.co.jp/docs/news/2112852.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
-              <p class="hook">일본의 기술 변화는 생각보다 조용한 곳에서 먼저 보입니다.</p>
+              <h3>일본 결제가 현금보다 부드러운 경험 중심으로 바뀌는 흐름</h3>
+              <p class="source-line">ITmedia Business · <a href="https://www.itmedia.co.jp/business/articles/2605/31/news018.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
+              <p class="hook">일본에서 현금보다 더 중요해지는 건, 일본 결제가 현금보다 부드러운 경험 중심으로 바뀌는 흐름입니다.</p>
             </div>
           </div>
           <div class="topic-grid two-col">
@@ -151,25 +156,28 @@
               <div class="script-wrap">
                 <div class="script-toolbar">
                   <button class="tool-button" type="button" data-focus-target="script-0-1">스크립트 보기</button>
-                  <a class="tool-button" href="https://www.watch.impress.co.jp/docs/news/2112852.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <a class="tool-button" href="https://www.itmedia.co.jp/business/articles/2605/31/news018.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-0-1">복사</button>
                 </div>
-                <textarea class="script-box" id="script-0-1" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 Impress Watch에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 AI/기술의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
+                <textarea class="script-box" id="script-0-1" rows="14" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄에서 살다 보면 뉴스보다 먼저 거리에서 느껴지는 변화가 있습니다. ITmedia Business 기사에서 제가 잡은 포인트는 일본 결제가 현금보다 부드러운 경험 중심으로 바뀌는 흐름입니다. 핵심은 큰 발표 문구가 아니라, 매일 지나가는 순간의 감각입니다. 결제 수단의 기준이 &#x27;무엇으로 내느냐&#x27;보다 얼마나 막힘 없이 지나가느냐로 옮겨가고 있습니다. 특히 캐시리스 이용률 92%라는 단서가 이 변화를 꽤 선명하게 보여줍니다. 영상은 편의점 계산대, 터치 결제 단말기, 지갑 대신 스마트폰을 꺼내는 손을 짧게 이어 붙이면 좋습니다. 한 줄로 정리하면, 일본 결제가 현금보다 부드러운 경험 중심으로 바뀌는 흐름은 큰 뉴스보다 도쿄의 평범한 생활 장면에서 먼저 체감되는 변화입니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
               <section class="block">
                 <span class="label">썸네일 문구</span>
-                <div class="thumbnail-chip">일본 AI는 조용하다</div>
+                <div class="thumbnail-chip">일본 결제의 변화</div>
               </section>
               <section class="block">
-                <span class="label">브롤</span>
-                <ul><li>노트북 타이핑 클로즈업</li>
-<li>도쿄 오피스 빌딩</li>
-<li>스마트폰 화면 손동작</li>
-<li>역 안 디지털 광고판</li></ul>
+                <span class="label">촬영 컷</span>
+                <ul><li>편의점 계산대에서 스마트폰을 꺼내는 손 클로즈업</li>
+<li>터치 결제 단말기에 카드나 스마트폰을 대는 컷</li>
+<li>현금 없이 계산이 끝나는 계산대 와이드샷</li>
+<li>지갑 대신 스마트폰만 들고 걷는 도쿄 거리 컷</li></ul>
               </section>
-              
+              <section class="block">
+                <span class="label">본문 단서</span>
+                <p>キャッシュレス利用率は92％ 消費者が重視するのは？ ： ビザ・ワールドワイド・ジャパン調べ 決済手段を選ぶ際の基準が「何を使う」から「どれだけスムーズに支払えるか」へ移行している――。ビザ・ワールドワイド・ジャパン（東京都千代田区）が実施した「対面決済におけるキャッシュレス決済およびモバイル決済の使い分けに関する調査」で分かった。...</p>
+              </section>
             </div>
           </div>
         </article>
@@ -179,9 +187,9 @@
           <div class="topic-head">
             <span class="topic-number">2</span>
             <div>
-              <h3>도쿄 본사 집중이 조금씩 흔들리는 흐름</h3>
-              <p class="source-line">ITmedia Business · <a href="https://www.itmedia.co.jp/business/articles/2605/30/news004.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
-              <p class="hook">도쿄 생활에서 이런 작은 변화가 은근히 크게 느껴집니다.</p>
+              <h3>구글이 오모테산도에 일본 첫 직영점을 여는 흐름</h3>
+              <p class="source-line">Impress Watch · <a href="https://www.watch.impress.co.jp/docs/news/2113200.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
+              <p class="hook">도쿄 오모테산도에 구글 매장이 생긴다는 건, 단순한 매장 오픈보다 더 큰 신호처럼 보입니다.</p>
             </div>
           </div>
           <div class="topic-grid two-col">
@@ -190,25 +198,28 @@
               <div class="script-wrap">
                 <div class="script-toolbar">
                   <button class="tool-button" type="button" data-focus-target="script-0-2">스크립트 보기</button>
-                  <a class="tool-button" href="https://www.itmedia.co.jp/business/articles/2605/30/news004.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <a class="tool-button" href="https://www.watch.impress.co.jp/docs/news/2113200.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-0-2">복사</button>
                 </div>
-                <textarea class="script-box" id="script-0-2" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia Business에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 도쿄 라이프스타일의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
+                <textarea class="script-box" id="script-0-2" rows="13" readonly spellcheck="false" onclick="this.focus();this.select();">이 기사는 숫자나 발표보다, 생활 동선이 바뀌는 장면으로 보는 게 더 재밌습니다. 이번 Impress Watch 기사에서 중요한 건 제목보다 그 뒤의 생활 장면입니다. 구글이 오모테산도에 일본 첫 직영점을 여는 흐름은 갑자기 세상이 바뀐다는 얘기라기보다, 사람들이 덜 귀찮은 쪽으로 움직인다는 신호에 가깝습니다. 오모테산도 같은 장소에 체험형 매장이 생긴다는 건 기술이 온라인 서비스에서 거리의 경험으로 내려오는 장면입니다. 그래서 포인트는 미국 밖 첫 직영점이 도쿄 오모테산도에 생긴다는 단서입니다. 촬영은 오모테산도 거리, 스마트폰 매장 외관, 제품을 만져보는 손 중심으로 잡으면 기사 설명보다 관찰 느낌이 살아납니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
               <section class="block">
                 <span class="label">썸네일 문구</span>
-                <div class="thumbnail-chip">도쿄 생활의 신호</div>
+                <div class="thumbnail-chip">오모테산도 구글</div>
               </section>
               <section class="block">
-                <span class="label">브롤</span>
-                <ul><li>도쿄 역 앞 거리</li>
-<li>전철 개찰구</li>
-<li>주택가 골목</li>
-<li>신호등 앞 사람들</li></ul>
+                <span class="label">촬영 컷</span>
+                <ul><li>오모테산도 거리 표지나 교차로 와이드샷</li>
+<li>스마트폰 매장 외관을 정면에서 잡는 컷</li>
+<li>매장 유리창 너머 제품 진열을 보는 손/시선 컷</li>
+<li>도쿄 번화가에서 스마트폰을 확인하는 POV 컷</li></ul>
               </section>
-              
+              <section class="block">
+                <span class="label">본문 단서</span>
+                <p>グーグル、米国外で初の直営店「Google Store 表参道」今夏オープン Visa、Apple Payのタッチ決済でキャッシュバック 1等500円 ファミリーマート、“緑色”のセブン銀行ATM「ファミマATM」開始 グーグル、米国外で初の直営店「Google Store 表参道」今夏オープン “OpenAI超え”したアンソロピック その成功と課題 東レ、アップサイクル傘第2弾 フルカーボンの大判折り畳み傘...</p>
+              </section>
             </div>
           </div>
         </article>
@@ -218,9 +229,9 @@
           <div class="topic-head">
             <span class="topic-number">3</span>
             <div>
-              <h3>일본 이자카야가 버티기 어려워지는 배경</h3>
-              <p class="source-line">ITmedia Business · <a href="https://www.itmedia.co.jp/business/articles/2605/30/news020.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
-              <p class="hook">도쿄 생활에서 이런 작은 변화가 은근히 크게 느껴집니다.</p>
+              <h3>편의점 ATM까지 브랜드 경험으로 바뀌는 흐름</h3>
+              <p class="source-line">Impress Watch · <a href="https://www.watch.impress.co.jp/docs/news/2113220.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
+              <p class="hook">도쿄 생활에서 편의점은 그냥 가게가 아니라, 편의점 ATM까지 브랜드 경험으로 바뀌는 흐름을 보여주는 장소입니다.</p>
             </div>
           </div>
           <div class="topic-grid two-col">
@@ -229,25 +240,28 @@
               <div class="script-wrap">
                 <div class="script-toolbar">
                   <button class="tool-button" type="button" data-focus-target="script-0-3">스크립트 보기</button>
-                  <a class="tool-button" href="https://www.itmedia.co.jp/business/articles/2605/30/news020.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <a class="tool-button" href="https://www.watch.impress.co.jp/docs/news/2113220.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-0-3">복사</button>
                 </div>
-                <textarea class="script-box" id="script-0-3" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia Business에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 도쿄 라이프스타일의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
+                <textarea class="script-box" id="script-0-3" rows="13" readonly spellcheck="false" onclick="this.focus();this.select();">일본 뉴스 중에는 작아 보여도 실제 생활감이 꽤 강한 것들이 있습니다. 저는 이걸 편의점 문화 뉴스라기보다 도쿄 생활 리듬의 변화로 봤습니다. Impress Watch가 다룬 단서는 편의점 안 ATM까지 브랜드 색으로 바뀐다는 단서이고, 여기서 보이는 흐름은 편의점 ATM까지 브랜드 경험으로 바뀌는 흐름입니다. 도시 생활에서 가까운 가게 하나가 식사, 결제, 택배, 장보기까지 떠안는 장면이 늘고 있습니다. 겉으로는 사소해 보여도, 이런 변화는 편의점이나 역, 매장 같은 장소에서 먼저 체감됩니다. 마지막에는 이렇게 정리하면 됩니다. 편의점 ATM까지 브랜드 경험으로 바뀌는 흐름은 큰 뉴스보다 도쿄의 평범한 생활 장면에서 먼저 체감되는 변화입니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
               <section class="block">
                 <span class="label">썸네일 문구</span>
-                <div class="thumbnail-chip">도쿄 생활의 신호</div>
+                <div class="thumbnail-chip">편의점이 생활 인프라로</div>
               </section>
               <section class="block">
-                <span class="label">브롤</span>
-                <ul><li>도쿄 역 앞 거리</li>
-<li>전철 개찰구</li>
-<li>주택가 골목</li>
-<li>신호등 앞 사람들</li></ul>
+                <span class="label">촬영 컷</span>
+                <ul><li>편의점 입구에서 ATM 위치가 보이는 와이드샷</li>
+<li>ATM 화면 앞에서 카드를 꺼내는 손 클로즈업</li>
+<li>계산대 옆 생활 서비스 안내판 컷</li>
+<li>편의점 간판과 ATM 안내를 같이 잡는 컷</li></ul>
               </section>
-              
+              <section class="block">
+                <span class="label">본문 단서</span>
+                <p>ファミリーマート、“緑色”のセブン銀行ATM「ファミマATM」開始 Visa、Apple Payのタッチ決済でキャッシュバック 1等500円 ファミリーマート、“緑色”のセブン銀行ATM「ファミマATM」開始 グーグル、米国外で初の直営店「Google Store 表参道」今夏オープン “OpenAI超え”したアンソロピック その成功と課題 東レ、アップサイクル傘第2弾 フルカーボンの大判折り畳み傘...</p>
+              </section>
             </div>
           </div>
         </article>
@@ -257,9 +271,9 @@
           <div class="topic-head">
             <span class="topic-number">4</span>
             <div>
-              <h3>일본 기술이 일상 업무 안으로 조용히 들어오는 흐름</h3>
-              <p class="source-line">ITmedia NEWS · <a href="https://www.itmedia.co.jp/news/articles/2605/29/news059.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
-              <p class="hook">일본의 기술 변화는 생각보다 조용한 곳에서 먼저 보입니다.</p>
+              <h3>편의점이 생활 인프라처럼 넓어지는 흐름</h3>
+              <p class="source-line">ITmedia Business · <a href="https://www.itmedia.co.jp/business/articles/2606/01/news018.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
+              <p class="hook">도쿄 생활에서 편의점은 그냥 가게가 아니라, 편의점이 생활 인프라처럼 넓어지는 흐름을 보여주는 장소입니다.</p>
             </div>
           </div>
           <div class="topic-grid two-col">
@@ -268,25 +282,28 @@
               <div class="script-wrap">
                 <div class="script-toolbar">
                   <button class="tool-button" type="button" data-focus-target="script-0-4">스크립트 보기</button>
-                  <a class="tool-button" href="https://www.itmedia.co.jp/news/articles/2605/29/news059.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <a class="tool-button" href="https://www.itmedia.co.jp/business/articles/2606/01/news018.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-0-4">복사</button>
                 </div>
-                <textarea class="script-box" id="script-0-4" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia NEWS에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 AI/기술의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
+                <textarea class="script-box" id="script-0-4" rows="13" readonly spellcheck="false" onclick="this.focus();this.select();">겉으로는 기업 소식처럼 보이지만, 도쿄 생활자 입장에서는 다른 포인트가 보입니다. ITmedia Business 기사에서 제가 잡은 포인트는 편의점이 생활 인프라처럼 넓어지는 흐름입니다. 핵심은 큰 발표 문구가 아니라, 매일 지나가는 순간의 감각입니다. 도시 생활에서 가까운 가게 하나가 식사, 결제, 택배, 장보기까지 떠안는 장면이 늘고 있습니다. 특히 제목 뒤에 붙은 생활 현장의 맥락이라는 단서가 이 변화를 꽤 선명하게 보여줍니다. 영상은 편의점 도시락 진열대와 계산대 앞 손동작을 짧게 이어 붙이면 좋습니다. 한 줄로 정리하면, 편의점이 생활 인프라처럼 넓어지는 흐름은 큰 뉴스보다 도쿄의 평범한 생활 장면에서 먼저 체감되는 변화입니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
               <section class="block">
                 <span class="label">썸네일 문구</span>
-                <div class="thumbnail-chip">일본 AI는 조용하다</div>
+                <div class="thumbnail-chip">편의점이 생활 인프라로</div>
               </section>
               <section class="block">
-                <span class="label">브롤</span>
-                <ul><li>노트북 타이핑 클로즈업</li>
-<li>도쿄 오피스 빌딩</li>
-<li>스마트폰 화면 손동작</li>
-<li>역 안 디지털 광고판</li></ul>
+                <span class="label">촬영 컷</span>
+                <ul><li>편의점 외관에서 입구로 들어가는 컷</li>
+<li>도시락/간편식 진열대 클로즈업</li>
+<li>계산대 앞 손동작과 결제 단말기 컷</li>
+<li>편의점 봉투나 작은 장바구니를 든 손 컷</li></ul>
               </section>
-              
+              <section class="block">
+                <span class="label">본문 단서</span>
+                <p>なぜイオンは“標準的なスーパー”を増やすのか 「食品インフラ争奪戦」で始まる大淘汰 ： 小売・流通アナリストの視点 （1/5 ページ） みずほ銀行産業調査部・流通アナリスト12年間の後、独立。地域流通「愛」を貫き、全国各地への出張の日々を経て、モータリゼーションと業態盛衰の関連性に注目した独自の流通理論に到達。執筆、講演活動：ITmediaビジネスオンラインほか、月刊連載6本以上、TV等マスコミ出演多数。...</p>
+              </section>
             </div>
           </div>
         </article>
@@ -296,9 +313,9 @@
           <div class="topic-head">
             <span class="topic-number">5</span>
             <div>
-              <h3>스마트폰 서비스가 일본 생활 동선을 바꾸는 흐름</h3>
-              <p class="source-line">ITmedia NEWS · <a href="https://www.itmedia.co.jp/news/articles/2605/29/news081.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
-              <p class="hook">일본의 기술 변화는 생각보다 조용한 곳에서 먼저 보입니다.</p>
+              <h3>일본 회사 문화가 천천히 재조정되는 흐름</h3>
+              <p class="source-line">PR TIMES · <a href="https://prtimes.jp/main/html/rd/p/000000124.000069285.html" target="_blank" rel="noreferrer noopener">원문 기사</a></p>
+              <p class="hook">일본 회사 문화도 이제 출근과 회의 방식부터 조금씩 다시 정리되고 있습니다.</p>
             </div>
           </div>
           <div class="topic-grid two-col">
@@ -307,25 +324,28 @@
               <div class="script-wrap">
                 <div class="script-toolbar">
                   <button class="tool-button" type="button" data-focus-target="script-0-5">스크립트 보기</button>
-                  <a class="tool-button" href="https://www.itmedia.co.jp/news/articles/2605/29/news081.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
+                  <a class="tool-button" href="https://prtimes.jp/main/html/rd/p/000000124.000069285.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-0-5">복사</button>
                 </div>
-                <textarea class="script-box" id="script-0-5" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 살면서 일본 뉴스를 볼 때 흥미로운 건, 큰 변화가 항상 크게 등장하지는 않는다는 점입니다. 이번에 ITmedia NEWS에서 다룬 이슈도 그렇습니다. 겉으로는 하나의 기사처럼 보이지만, 실제로는 일본 AI/기술의 흐름을 보여주는 작은 신호에 가깝습니다. 도쿄에서는 이런 변화가 역, 편의점, 회사, 매장 같은 평범한 장소에서 먼저 느껴집니다. 그래서 이 주제는 거창한 뉴스라기보다, 일본 생활의 결이 조금 바뀌고 있다는 관찰로 보는 게 더 자연스럽습니다.</textarea>
+                <textarea class="script-box" id="script-0-5" rows="12" readonly spellcheck="false" onclick="this.focus();this.select();">한국에서 보면 그냥 일본 뉴스인데, 여기서 살면 조금 다르게 읽히는 장면이 있습니다. 이번 PR TIMES 기사에서 중요한 건 제목보다 그 뒤의 생활 장면입니다. 일본 회사 문화가 천천히 재조정되는 흐름은 갑자기 세상이 바뀐다는 얘기라기보다, 사람들이 덜 귀찮은 쪽으로 움직인다는 신호에 가깝습니다. 겉으로는 큰 변화가 없어 보여도 출근, 문서, 회의 방식이 조금씩 다시 정리되고 있습니다. 그래서 포인트는 제목 뒤에 붙은 생활 현장의 맥락이라는 단서입니다. 촬영은 출근길 개찰구와 회의실 앞의 조용한 움직임 중심으로 잡으면 기사 설명보다 관찰 느낌이 살아납니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
               <section class="block">
                 <span class="label">썸네일 문구</span>
-                <div class="thumbnail-chip">일본 AI는 조용하다</div>
+                <div class="thumbnail-chip">일본 회사의 변화</div>
               </section>
               <section class="block">
-                <span class="label">브롤</span>
-                <ul><li>노트북 타이핑 클로즈업</li>
-<li>도쿄 오피스 빌딩</li>
-<li>스마트폰 화면 손동작</li>
-<li>역 안 디지털 광고판</li></ul>
+                <span class="label">촬영 컷</span>
+                <ul><li>출근길 역 개찰구 와이드샷</li>
+<li>오피스 빌딩 엘리베이터 앞 대기 컷</li>
+<li>회의실 문패와 조용한 복도 컷</li>
+<li>노트북을 덮거나 문서를 정리하는 손 컷</li></ul>
               </section>
-              
+              <section class="block">
+                <span class="label">본문 단서</span>
+                <p>マンダリン オリエンタル 東京、クリストフルとのコラボレーションによる「マルメゾン・リヴィエラ」アフタヌーンティーを数量限定で提供 プレスリリース・ニュースリリース配信サービスのPR TIMES プレスリリースを受信 企業登録申請 Top テクノロジー モバイル アプリ エンタメ ビューティー ファッション ライフスタイル ビジネス グルメ スポーツ … PR TIMESのご利用について マンダリン・オリエンタル東京株式会社 会社概要...</p>
+              </section>
             </div>
           </div>
         </article>
@@ -378,7 +398,7 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                   <a class="tool-button" href="https://article.yahoo.co.jp/detail/2e1924d3bca74d70d8fd1a2e7bcbdbf1b7f1a4a9" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-1-1">복사</button>
                 </div>
-                <textarea class="script-box" id="script-1-1" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄에 살면서 요즘 가장 현실적으로 느끼는 변화 중 하나는 편의점의 역할입니다. 예전에는 급할 때 들르는 곳이었다면, 지금은 작은 슈퍼처럼 일상 장보기를 대신하는 분위기가 더 강해졌습니다. 1인 가구가 많고, 멀리 큰 마트까지 가기엔 시간이 애매한 도시에서는 이런 변화가 아주 자연스럽습니다. 일본의 변화는 대개 조용하게 오는데, 편의점 진열대가 바뀌는 방식은 지금 도쿄의 생활 리듬이 어떻게 달라지는지를 꽤 정확하게 보여줍니다.</textarea>
+                <textarea class="script-box" id="script-1-1" rows="10" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄에 살면서 요즘 가장 현실적으로 느끼는 변화 중 하나는 편의점의 역할입니다. 예전에는 급할 때 들르는 곳이었다면, 지금은 작은 슈퍼처럼 일상 장보기를 대신하는 분위기가 더 강해졌습니다. 1인 가구가 많고, 멀리 큰 마트까지 가기엔 시간이 애매한 도시에서는 이런 변화가 아주 자연스럽습니다. 일본의 변화는 대개 조용하게 오는데, 편의점 진열대가 바뀌는 방식은 지금 도쿄의 생활 리듬이 어떻게 달라지는지를 꽤 정확하게 보여줍니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
@@ -387,13 +407,16 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                 <div class="thumbnail-chip">편의점이 장보는 곳?</div>
               </section>
               <section class="block">
-                <span class="label">브롤</span>
+                <span class="label">촬영 컷</span>
                 <ul><li>주택가 근처 편의점 외관</li>
 <li>채소나 반찬류 진열 클로즈업</li>
 <li>작은 장바구니를 든 사람들</li>
 <li>역 앞 상점가 워킹샷</li></ul>
               </section>
-              
+              <section class="block">
+                <span class="label">본문 단서</span>
+                <p></p>
+              </section>
             </div>
           </div>
         </article>
@@ -417,7 +440,7 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                   <a class="tool-button" href="https://www.itmedia.co.jp/aiplus/article/2605/28/2000000033/" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-1-2">복사</button>
                 </div>
-                <textarea class="script-box" id="script-1-2" readonly spellcheck="false" onclick="this.focus();this.select();">많은 사람이 일본의 AI를 말할 때 로봇부터 떠올리지만, 실제로는 훨씬 더 조용한 곳에서 변화가 시작되고 있습니다. 정부 문서 초안 작성이나 자료 정리 같은 행정 업무에 AI가 이미 들어가기 시작한 겁니다. 도쿄에서 이 흐름이 흥미로운 이유는, 일본은 새로운 기술도 대개 화려하게 밀어붙이기보다 시스템 안쪽부터 천천히 스며들게 만들기 때문입니다. 결국 일본의 AI 전환은 멋진 데모보다 문서, 규정, 업무 흐름에서 먼저 체감될 가능성이 큽니다.</textarea>
+                <textarea class="script-box" id="script-1-2" rows="10" readonly spellcheck="false" onclick="this.focus();this.select();">많은 사람이 일본의 AI를 말할 때 로봇부터 떠올리지만, 실제로는 훨씬 더 조용한 곳에서 변화가 시작되고 있습니다. 정부 문서 초안 작성이나 자료 정리 같은 행정 업무에 AI가 이미 들어가기 시작한 겁니다. 도쿄에서 이 흐름이 흥미로운 이유는, 일본은 새로운 기술도 대개 화려하게 밀어붙이기보다 시스템 안쪽부터 천천히 스며들게 만들기 때문입니다. 결국 일본의 AI 전환은 멋진 데모보다 문서, 규정, 업무 흐름에서 먼저 체감될 가능성이 큽니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
@@ -426,13 +449,16 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                 <div class="thumbnail-chip">정부 문서도 AI?</div>
               </section>
               <section class="block">
-                <span class="label">브롤</span>
+                <span class="label">촬영 컷</span>
                 <ul><li>카스미가세키 건물 외관</li>
 <li>문서와 키보드 클로즈업</li>
 <li>오피스 출근 인파</li>
 <li>노트북 화면 위 손 움직임</li></ul>
               </section>
-              
+              <section class="block">
+                <span class="label">본문 단서</span>
+                <p></p>
+              </section>
             </div>
           </div>
         </article>
@@ -456,7 +482,7 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                   <a class="tool-button" href="https://www.itmedia.co.jp/business/articles/2605/14/news006.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-1-3">복사</button>
                 </div>
-                <textarea class="script-box" id="script-1-3" readonly spellcheck="false" onclick="this.focus();this.select();">일본에서 일 이야기를 할 때 보통은 과로와 인내를 떠올리지만, 요즘은 조금 다른 공기도 느껴집니다. 겉으로 크게 불만을 말하지는 않지만, 승진이나 과도한 헌신에서 한 발 물러서는 사람들이 늘고 있다는 점입니다. 일본에서는 변화가 늘 천천히 보이기 때문에 이런 흐름은 더 의미가 있습니다. 예전처럼 회사가 삶의 중심이어야 한다는 감각이 약해지고 있고, 사람들은 조용하게 자기 일과 삶의 경계를 다시 그리고 있는 것처럼 보입니다.</textarea>
+                <textarea class="script-box" id="script-1-3" rows="10" readonly spellcheck="false" onclick="this.focus();this.select();">일본에서 일 이야기를 할 때 보통은 과로와 인내를 떠올리지만, 요즘은 조금 다른 공기도 느껴집니다. 겉으로 크게 불만을 말하지는 않지만, 승진이나 과도한 헌신에서 한 발 물러서는 사람들이 늘고 있다는 점입니다. 일본에서는 변화가 늘 천천히 보이기 때문에 이런 흐름은 더 의미가 있습니다. 예전처럼 회사가 삶의 중심이어야 한다는 감각이 약해지고 있고, 사람들은 조용하게 자기 일과 삶의 경계를 다시 그리고 있는 것처럼 보입니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
@@ -465,13 +491,16 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                 <div class="thumbnail-chip">일본의 조용한 퇴사</div>
               </section>
               <section class="block">
-                <span class="label">브롤</span>
+                <span class="label">촬영 컷</span>
                 <ul><li>아침 출근길 역 인파</li>
 <li>사무실 빌딩 엘리베이터 앞</li>
 <li>노트북을 덮는 손</li>
 <li>퇴근 후 조용한 주택가 골목</li></ul>
               </section>
-              
+              <section class="block">
+                <span class="label">본문 단서</span>
+                <p></p>
+              </section>
             </div>
           </div>
         </article>
@@ -495,7 +524,7 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                   <a class="tool-button" href="https://www.radionikkei.jp/trendy/_250330.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-1-4">복사</button>
                 </div>
-                <textarea class="script-box" id="script-1-4" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 생활을 하다 보면 효율적인 도시라는 말을 자주 떠올리게 되지만, 동시에 꽤 지치는 도시이기도 합니다. 그래서 요즘 일본 소비에서 흥미로운 건, 시간을 아끼는 것보다 마음이 덜 소모되는 경험을 찾는 흐름입니다. 선택지가 너무 많지 않고, 비교 피로가 적고, 들어가면 바로 이해되는 매장이나 서비스가 더 매력적으로 보이는 거죠. 결국 앞으로는 더 빠른 서비스보다 덜 피곤한 서비스가 프리미엄이 될 수도 있다는 얘기인데, 이건 도쿄 같은 도시에서 특히 설득력이 있습니다.</textarea>
+                <textarea class="script-box" id="script-1-4" rows="10" readonly spellcheck="false" onclick="this.focus();this.select();">도쿄 생활을 하다 보면 효율적인 도시라는 말을 자주 떠올리게 되지만, 동시에 꽤 지치는 도시이기도 합니다. 그래서 요즘 일본 소비에서 흥미로운 건, 시간을 아끼는 것보다 마음이 덜 소모되는 경험을 찾는 흐름입니다. 선택지가 너무 많지 않고, 비교 피로가 적고, 들어가면 바로 이해되는 매장이나 서비스가 더 매력적으로 보이는 거죠. 결국 앞으로는 더 빠른 서비스보다 덜 피곤한 서비스가 프리미엄이 될 수도 있다는 얘기인데, 이건 도쿄 같은 도시에서 특히 설득력이 있습니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
@@ -504,13 +533,16 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                 <div class="thumbnail-chip">덜 지치는 소비</div>
               </section>
               <section class="block">
-                <span class="label">브롤</span>
+                <span class="label">촬영 컷</span>
                 <ul><li>복잡한 진열대와 가격표</li>
 <li>조용한 카페나 서점 내부</li>
 <li>선택 앞에서 멈춘 손</li>
 <li>도쿄 번화가 워킹샷</li></ul>
               </section>
-              
+              <section class="block">
+                <span class="label">본문 단서</span>
+                <p></p>
+              </section>
             </div>
           </div>
         </article>
@@ -534,7 +566,7 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                   <a class="tool-button" href="https://www.itmedia.co.jp/news/articles/2605/19/news114.html" target="_blank" rel="noreferrer noopener">기사 보기</a>
                   <button class="copy-button" type="button" data-copy-target="script-1-5">복사</button>
                 </div>
-                <textarea class="script-box" id="script-1-5" readonly spellcheck="false" onclick="this.focus();this.select();">AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도쿄에서는 꽤 현실적인 도구가 될 수도 있습니다. 이 도시는 간판, 메뉴, 역 안내, 작은 글씨가 끝없이 이어지는 곳이라 시선이 늘 바쁩니다. 그래서 번역이나 정보 보조가 눈앞에서 바로 이뤄진다면, 도쿄에서는 그 효용이 아주 빨리 드러날 수 있습니다. 중요한 건 기술의 화려함보다 일상에 자연스럽게 섞이느냐인데, 그런 의미에서 도쿄는 AI 안경의 가장 정직한 테스트 장소처럼 보입니다.</textarea>
+                <textarea class="script-box" id="script-1-5" rows="10" readonly spellcheck="false" onclick="this.focus();this.select();">AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도쿄에서는 꽤 현실적인 도구가 될 수도 있습니다. 이 도시는 간판, 메뉴, 역 안내, 작은 글씨가 끝없이 이어지는 곳이라 시선이 늘 바쁩니다. 그래서 번역이나 정보 보조가 눈앞에서 바로 이뤄진다면, 도쿄에서는 그 효용이 아주 빨리 드러날 수 있습니다. 중요한 건 기술의 화려함보다 일상에 자연스럽게 섞이느냐인데, 그런 의미에서 도쿄는 AI 안경의 가장 정직한 테스트 장소처럼 보입니다.</textarea>
               </div>
             </section>
             <div class="topic-grid">
@@ -543,13 +575,16 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
                 <div class="thumbnail-chip">도쿄에서 AI 안경</div>
               </section>
               <section class="block">
-                <span class="label">브롤</span>
+                <span class="label">촬영 컷</span>
                 <ul><li>시부야나 신주쿠 POV 워킹샷</li>
 <li>간판과 메뉴판 클로즈업</li>
 <li>안경을 손에 든 컷</li>
 <li>도심 인파 와이드샷</li></ul>
               </section>
-              
+              <section class="block">
+                <span class="label">본문 단서</span>
+                <p></p>
+              </section>
             </div>
           </div>
         </article>
@@ -565,8 +600,17 @@ AI 안경 이야기를 들으면 미래적인 제품처럼 느껴지지만, 도�
         panels.forEach((panel) => { panel.hidden = panel.id !== targetId; });
         const activePanel = document.getElementById(targetId);
         if (activePanel) activePanel.scrollIntoView({ behavior: "smooth", block: "start" });
+        resizeScriptBoxes();
       }
       tabs.forEach((tab) => tab.addEventListener("click", () => activatePanel(tab.dataset.target)));
+      function resizeScriptBoxes() {
+        document.querySelectorAll(".script-box").forEach((field) => {
+          field.style.height = "auto";
+          field.style.height = `${field.scrollHeight + 2}px`;
+        });
+      }
+      window.addEventListener("load", resizeScriptBoxes);
+      window.addEventListener("resize", resizeScriptBoxes);
       async function copyText(text) {
         try { await navigator.clipboard.writeText(text); return true; }
         catch (error) {
